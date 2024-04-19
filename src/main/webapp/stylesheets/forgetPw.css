@@ -1,0 +1,91 @@
+@charset "ISO-8859-1";
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif; 
+  }
+  
+  body {
+    min-height: 100vh;
+    width: 100%;
+    background: #3A4A4D;
+  }
+  
+  .resetPw_container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 430px;
+    width: 100%;
+    background: #fff;
+    border-radius: 7px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  .resetPw_container .resetPw_form {
+    padding: 2rem;
+  }
+  
+  .resetPw_form header {
+    font-size: 2rem;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .resetPw_form input {
+    height: 60px;
+    width: 100%;
+    padding: 0 15px;
+    font-size: 17px;
+    margin-bottom: 1.3rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    outline: none;
+  }
+  
+  .resetPw_form input:focus {
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+  }
+  
+  .resetPw_form a {
+    font-size: 16px;
+    color: #3A4A4D;
+    text-decoration: none;
+  }
+  
+  .resetPw_form a:hover {
+    text-decoration: underline;
+  }
+  
+  .resetPw_form input.button {
+    color: #fff;
+    background: #3A4A4D;
+    font-size: 1.2rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    margin-top: 1.7rem;
+    cursor: pointer;
+    transition: 0.4s;
+  }
+  
+  .resetPw_form input.button:hover {
+    background: #7f9fa4;
+  }
+  
+  .signup {
+    font-size: 17px;
+    text-align: center;
+  }
+  
+  .signup a {
+    color: #3A4A4D;
+    cursor: pointer;
+  }
+  
+  .signup a:hover {
+    text-decoration: underline;
+  }
+  
