@@ -65,7 +65,8 @@ body {
   font-size: 1.2rem;
   font-weight: 500;
   letter-spacing: 1px;
-  margin-top: 1.7rem;
+  margin-top: 1.7rem; /* Adjusted margin-top */
+  margin-bottom: 0.5rem; /* Added margin-bottom */
   cursor: pointer;
   transition: 0.4s;
 }
@@ -74,8 +75,32 @@ body {
   background: #7f9fa4;
 }
 
+.login_form button {
+  height: 60px; /* Match the height with other input fields */
+  width: 100%;
+  padding: 0 15px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  margin-top: 1.7rem; /* Adjusted margin-top */
+  background-color: #3A4A4D; /* Button background color */
+  color: #fff; /* Text color */
+  border: none; /* Remove border */
+  border-radius: 6px; /* Add border radius */
+  cursor: pointer;
+  transition: background-color 0.4s; /* Smooth transition */
+}
+
+.login_form button:hover {
+  background-color: #7f9fa4; /* Change background color on hover */
+}
+
+
 .signup {
   font-size: 17px;
   text-align: center;
 }
 
+.signup-link {
+  margin-top: 1rem; /* Added margin-top */
+}

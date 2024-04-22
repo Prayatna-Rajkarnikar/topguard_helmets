@@ -128,7 +128,7 @@ public class RegisterServlet extends HttpServlet {
 		}
 //		
 		
-		 String retypePassword = request.getParameter("retypePassword");
+		String retypePassword = request.getParameter("retypePassword");
 		if (!password.equals(retypePassword)) { 
 			String errorMessage = "Password and Retype Password do not match.";
 		 request.setAttribute(StringUtil.MESSAGE_ERROR, errorMessage);

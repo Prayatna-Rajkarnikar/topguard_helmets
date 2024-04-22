@@ -1,0 +1,95 @@
+@charset "ISO-8859-1";
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif; 
+}
+
+.home_slider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #F9FBFB;
+}
+
+.content {
+    text-align: center;
+}
+
+.content h1 {
+    font-size: 36px;
+    color: #3A4A4D;
+    margin-bottom: 10px;
+}
+
+.content p {
+    font-size: 18px;
+    color: #505c5f;
+    margin-bottom: 20px;
+}
+
+.shopNow_btn button {
+    padding: 10px 20px;
+    background-color: #3A4A4D;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.shopNow_btn button:hover {
+    background-color: #729fab;
+}
+
+.img_helmet {
+    flex: 1;
+}
+
+.img_helmet img {
+    max-width: 100%;
+    height: auto;
+}
+
+.helmets {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 50px; /* Increase top margin */
+}
+
+.helmet-card {
+    flex: 1 0 calc(25% - 20px); /* Adjust card width for 4 cards per row */
+    margin: 10px; /* Add spacing between cards */
+    padding: 20px;
+    background-color: #F9FBFB;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+    border-radius: 10px;
+}
+
+.helmet-card img {
+    max-width: 100%;
+    height: auto;
+}
+
+.helmet-card h2 {
+    font-size: 18px;
+    color: #333;
+    margin-top: 10px;
+}
+
+.helmet-card p {
+    font-size: 16px;
+    color: #555;
+    margin-top: 5px;
+}
+
+.helmet-card p {
+    font-size: 16px;
+    color: #777; /* Adjust color for price */
+    margin-top: 5px;
+}

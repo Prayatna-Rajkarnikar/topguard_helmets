@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import model.HelmetModel;
+import model.LoginStatus;
 import model.LoginUserModel;
 import model.PasswordEncryptionWithAes;
 import model.UserModel;
@@ -123,39 +125,42 @@ public class HelmetDbController {
     }
 
     
-    public int getStudentLoginInfo(LoginUserModel loginUserModel) {
+    public LoginStatus getUserLoginInfo(LoginUserModel loginModel) {
         try (Connection con = getConnection()) {
-            PreparedStatement ps = getConnection()
-                    .prepareStatement(StringUtil.GET_REGISTER_USER_INFO);
+            PreparedStatement st = con.prepareStatement(StringUtil.GET_REGISTER_USER_INFO);
 
             // Set the username in the first parameter of the prepared statement
-            ps.setString(1, loginUserModel.getUser_name());
-            
-            
-            ResultSet pr = ps.executeQuery();
-            if (pr.next()) {
-               
-                String userDb = pr.getString("user_name");
+            st.setString(1, loginModel.getUser_name());
 
-                String encryptedPwd = pr.getString(StringUtil.password);
-               
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+
+                String userDb = rs.getString("user_name");
+
+                String encryptedPwd = rs.getString(StringUtil.password);
+
                 String decryptedPwd = PasswordEncryptionWithAes.decrypt(encryptedPwd, userDb);
-              
-                if (userDb.equalsIgnoreCase( loginUserModel.getUser_name()) 
-                        && decryptedPwd.equals((loginUserModel).getPassword())) {
-                    // Login successful, return 1
-                    return 1;
+
+                if (userDb.equalsIgnoreCase(loginModel.getUser_name()) && decryptedPwd != null && decryptedPwd.equals((loginModel).getPassword())) {
+                    String role = rs.getString("role"); // Assuming 'role' is the column name for the user's role
+                    if (role != null) {
+                        // User role found, return login result with role
+                        return new LoginStatus(1, role); // 1 indicates successful login
+                    } else {
+                        // Role not found, return login result without role
+                        return new LoginStatus(1, null); // 1 indicates successful login
+                    }
                 } else {
-                    // Username or password mismatch, return 0
-                    return 0;
+                    // Username or password mismatch, return login result without role
+                    return new LoginStatus(0, null); // 0 indicates username or password mismatch
                 }
             } else {
-                // Username not found in the database, return -1
-                return -1;
+                // Username not found in the database, return login result without role
+                return new LoginStatus(-1, null); // -1 indicates username not found
             }
         } catch (SQLException | ClassNotFoundException ex) {
             ex.printStackTrace();
-            return -2;
+            return new LoginStatus(-2, null); // -2 indicates error
         }
     }
     
@@ -191,6 +196,29 @@ public class HelmetDbController {
         } catch (SQLException | ClassNotFoundException ex) {
             ex.printStackTrace();
             return -3; // Error
+        }
+    }
+    
+    public int addHelmet(HelmetModel helmetModel) {
+        try (Connection con = getConnection();
+             PreparedStatement st = con.prepareStatement("INSERT INTO helmet (helmet_Name, price, brand, color, size, helmet_image) VALUES (?, ?, ?, ?,?,?)")) 
+        {
+            st.setString(1, helmetModel.getHelmet_Name());
+            st.setDouble(2, helmetModel.getPrice());
+            st.setString(3, helmetModel.getBrand());
+            st.setString(4, helmetModel.getColor());
+            st.setString(5, helmetModel.getSize());
+            st.setString(6, helmetModel.getUserImageUrl());
+            int result = st.executeUpdate();
+
+            if (result > 0) {
+                return 1; // Success
+            } else {
+                return 0; // No rows affected
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
+            return -1; // Error
         }
     }
 }

@@ -1,20 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ page import="util.StringUtil" %>
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/stylesheets/welcome.css" />
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/stylesheets/landingPage.css" />
 </head>
 <body>
 <jsp:include page="navBar.jsp"/>
-	<%
-		String userSession = (String) session.getAttribute(StringUtil.username);
-	%>
-	<div class="welcome">
-		<h1>Hello <%=userSession %>. Welcome to our page!</h1>
-		<p>Session user name: <%=userSession %></p>
-	</div>
 	<section class="home_slider">
         <div class="content">
             <h1>Protect Your Passion: TopGuard Helmets</h1>
@@ -50,5 +44,6 @@
             <p>Rs. 6000</p> 
         </div>
     </section>
+
 </body>
 </html>

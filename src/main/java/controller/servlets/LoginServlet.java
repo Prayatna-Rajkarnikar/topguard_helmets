@@ -3,12 +3,14 @@ package controller.servlets;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import controller.database.HelmetDbController;
+import model.LoginStatus;
 import model.LoginUserModel;
 import util.StringUtil;
 
@@ -39,20 +41,30 @@ public class LoginServlet extends HttpServlet {
         System.out.println("Password from user: " + loginUserModel);
 
         // Call DBController to validate login credentials
-        int loginResult = dbController.getStudentLoginInfo(loginUserModel);
+        LoginStatus loginResult = dbController.getUserLoginInfo(loginUserModel);        	
         System.out.println("Password from database: " + loginResult);
 
-        if (loginResult == 1) {
+        if (loginResult.getStatus() == 1) {
         	HttpSession userSession = request.getSession();
 			userSession.setAttribute("user_name", username);
 			userSession.setMaxInactiveInterval(30*30);
+			
+			Cookie userCookie= new Cookie("user", username);
+			userCookie.setMaxAge(30*60);
+			response.addCookie(userCookie);
+			
+			if ("admin".equals(loginResult.getRole())) {
+                // User is admin, redirect to admin dashboard
+                response.sendRedirect(request.getContextPath() +"/pages/register.jsp");
+			 } else {
+	                // User is not admin, redirect to home page
+	                response.sendRedirect(request.getContextPath() +"/pages/welcome.jsp");
+	            }
         	
             request.setAttribute(StringUtil.MESSAGE_SUCCESS, StringUtil.MESSAGE_SUCCESS_LOGIN);
-            response.sendRedirect(request.getContextPath() + "/pages/welcome.jsp");
-        } else if (loginResult == -1) {
+        } else if (loginResult.getStatus() == -1) {
             // Username not found
-            request.setAttribute(StringUtil.MESSAGE_ERROR, StringUtil.MESSAGE_ERROR_CREATE_ACCOUNT);
-            request.getRequestDispatcher(StringUtil.PAGE_URL_LOGIN).forward(request, response);
+        	 response.sendRedirect(request.getContextPath() +"login.jsp?error=1");
         } else {
             // Internal server error
             request.setAttribute(StringUtil.MESSAGE_ERROR, StringUtil.MESSAGE_ERROR_SERVER);

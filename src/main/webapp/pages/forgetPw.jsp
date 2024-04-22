@@ -18,7 +18,7 @@
       <input type="password" id="confirm_password" name= "confirm_password" placeholder="Confirm new password">
       <input type="submit" class="button" id="reset-button" value="Reset Password">
     </form>
-    <a href="#" id="login-link">Login</a>
+    <a href="login.jsp" id="login-link">Login</a>
   </div>
 </div>
 </body>
