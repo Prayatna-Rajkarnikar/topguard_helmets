@@ -4,15 +4,19 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Helmet Management</title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/stylesheets/adminProduct.css" />
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core"%>
 </head>
 <body>
-	<div class="helmet-container">
+    <a href="${pageContext.request.contextPath}/pages/adminPanel.jsp">
+            <button class="back_button">Go Back</button>
+    </a>
+    <div class="helmet-container">
         <h1>Helmet Management</h1>
         <div class="helmet-form-container">
             <h2>Add a New Helmet</h2>
-            <form action="/TopGuard_Helmets/AdminProductServlet" method="post" enctype="multipart/form-data">
+            <form action="${pageContext.request.contextPath}/AdminProductServlet" method="post" enctype="multipart/form-data">
                 <label for="helmet_name">Helmet Name:</label>
                 <input type="text" id="helmet_name" name="helmet_name" required>
                 <label for="helmet_price">Helmet Price:</label>
@@ -30,31 +34,45 @@
         </div>
         <div class="helmet-table-container">
             <table class="helmet-table">
+                    <thead>
+                        <tr>
+                            <th>Helmet Id</th>
+                            <th>Helmet Image</th>
+                            <th>Helmet Name</th>
+                            <th>Helmet Price</th>
+                            <th>Helmet Brand</th>
+                            <th>Helmet Color</th>
+                            <th>Helmet Size</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>        
+                    <c:if test="${empty helmets}">
                     <tr>
-                        <th>Helmet Id</th>
-                        <th>Helmet Image</th>
-                        <th>Helmet Name</th>
-                        <th>Helmet Price</th>
-                        <th>Helmet Brand</th>
-                        <th>Helmet Color</th>
-                        <th>Helmet Size</th>
-                        <th>Action</th>
+                        <td colspan="8">No products found.</td>
                     </tr>
-                <tbody>
-                    <tr>
-                        <td>Helmet Id</td>
-                        <td><img src="images/helmet3.jpg" height="100" alt="Product Image"></td>
-                        <td>Helmet Name</td>
-                        <td> RS 6100</td>
-                    </tr>
-                </tbody>
+                </c:if>
+                <c:if test="${not empty helmets}">
+                    <c:forEach var="helmet" items="${helmets}">
+                        <tr>
+                            <td>${helmet.helmet_ID}</td>
+                            <td><img src="${pageContext.request.contextPath}/resources/images/user/${helmet.userImageUrl}" height="100" alt="Helmet Image"></td>
+                            <td>${helmet.helmet_Name}</td>
+                            <td>${helmet.price}</td>
+                            <td>${helmet.brand}</td>
+                            <td>${helmet.color}</td>
+                            <td>${helmet.size}</td>
+                            <td>
+                                <button class="edit-btn">Edit</button>
+                                <button class="delete-btn">Delete</button>
+                            
+                            </td>
+                        </tr>
+                         </c:forEach>
+                </c:if>
+                    </tbody>
             </table>
         </div>
     </div>
-    <div class = "buttons">
-		    <button class="edit-btn">Edit</button>
-		    <button class="delete-btn">Delete</button>
-    </div>
-
 </body>
 </html>

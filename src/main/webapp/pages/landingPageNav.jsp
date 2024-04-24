@@ -23,10 +23,7 @@
         <a href="${pageContext.request.contextPath}/pages/login.jsp">
 			<button class="login_button">Login</button>
 		</a>
-        
-		<a href="${pageContext.request.contextPath}/pages/register.jsp">
-			<button class="register_button">Register Now</button>
-		</a>
+
       </div>
     </div>
   </nav>

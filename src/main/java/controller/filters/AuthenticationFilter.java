@@ -18,69 +18,54 @@ public class AuthenticationFilter implements Filter {
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
+		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
+	        throws IOException, ServletException {
 
-		// Cast the request and response to HttpServletRequest and HttpServletResponse
-		HttpServletRequest req = (HttpServletRequest) request;
-		HttpServletResponse res = (HttpServletResponse) response;
+	    // Cast request and response objects to HttpServletRequest and HttpServletResponse for type safety
+	    HttpServletRequest req = (HttpServletRequest) request;
+	    HttpServletResponse res = (HttpServletResponse) response;
 
-		// Get the requested URI
-		String uri = req.getRequestURI();
+	    // Get the requested URI
+	    String uri = req.getRequestURI();
 
-		// Immediately allows requests for CSS files and the index page to pass
-		// through without further checks.
-		// If you want other files to directly open, include them in this
-		// condition
-		if (uri.endsWith(".css") || uri.endsWith(StringUtil.URL_INDEX)) {
-			// it delegates control to the next filter in the chain, or if this filter is
-			// the last one in the chain, to the servlet that services the incoming request.
-			chain.doFilter(request, response);
-			return;
-		}
+	    // Allow access to static resources (CSS) and the index page without checking login
+	    if (uri.endsWith(".css") || uri.endsWith(".png") || uri.endsWith(".jpg")) {
+	        chain.doFilter(request, response);
+	        return;
+	    }
+	    
+	    if(uri.endsWith(StringUtil.URL_LANDINGPAGE) || uri.endsWith("/")) {
+			request.getRequestDispatcher(StringUtil.PAGE_URL_HOME).forward(request, response);
+//	        res.sendRedirect(req.getContextPath() + StringUtils.SERVLET_URL_HOME);
+	        return;
+    	}
 
-		// Check if the requested URI indicates a login page (e.g., /login.jsp)
-		boolean isLogin = uri.endsWith(StringUtil.URL_LOGIN);
-		System.out.print(isLogin);
-		
-		// Check if the requested URI indicates a login servlet (e.g., /login)
-		boolean isLoginServlet = uri.endsWith(StringUtil.SERVLET_URL_LOGIN);
-		System.out.print(isLoginServlet);
+	    // Separate flags for login, login/logout servlets, and register page/servlet for better readability
+	    boolean isLogin = uri.endsWith(StringUtil.PAGE_URL_LOGIN);
+	    boolean isLoginServlet = uri.endsWith(StringUtil.SERVLET_URL_LOGIN);
+	    boolean isLogoutServlet = uri.endsWith(StringUtil.SERVLET_URL_LOGOUT);
+	    boolean isHomeServlet = uri.endsWith(StringUtil.PAGE_URL_HOME);
+	 
+	    boolean isRegisterPage = uri.endsWith(StringUtil.PAGE_URL_REGISTER);
+	    boolean isRegisterServlet = uri.endsWith(StringUtil.SERVLET_URL_REGISTER);
 
-		// Check if the requested URI indicates a logout servlet (e.g., /logout)
-		boolean isLogoutServlet = uri.endsWith(StringUtil.SERVLET_URL_LOGOUT);
-		System.out.print(isLogoutServlet);
+	    // Check if a session exists and if the username attribute is set to determine login status
+	    HttpSession session = req.getSession(false); // Don't create a new session if one doesn't exist
+	    boolean isLoggedIn = session != null && session.getAttribute(StringUtil.username) != null;
 
-		// Attempt to retrieve the current session associated with the request.
-		// If 'false' is passed as an argument and no session exists, it returns null.
-		HttpSession session = req.getSession(false);
-
-		// Check if a session exists and if the 'USERNAME' attribute is set in the
-		// session.
-		// If both conditions are true, it indicates that the user is logged in.
-		boolean isLoggedIn = session != null && session.getAttribute(StringUtil.username) != null;
-		System.out.print(isLoggedIn);
-
-		// If the user is not logged in and the requested URI does not indicate an
-		// attempt to access the login page or login servlet,
-		// redirect the user to the login page to authenticate.
-		if (!isLoggedIn && !(isLogin || isLoginServlet)) {
-			res.sendRedirect(req.getContextPath() + StringUtil.PAGE_URL_LOGIN);
-		}
-		// If the user is logged in and the requested URI does not indicate an attempt
-		// to access the login page or logout servlet,
-		// redirect the user to the home page to prevent access to login-related pages.
-		else if (isLoggedIn && !(!isLogin || isLogoutServlet)) {
-			res.sendRedirect(req.getContextPath() + StringUtil.URL_INDEX);
-		}
-		// If none of the above conditions are met, allow the request to continue down
-		// the filter chain.
-		else {
-			chain.doFilter(request, response);
-		}
+	    // Redirect to login if user is not logged in and trying to access a protected resource
+	    if (!isLoggedIn && !isHomeServlet && !(isLogin || isLoginServlet || isRegisterPage || isRegisterServlet)) {
+	        res.sendRedirect(req.getContextPath() + StringUtil.PAGE_URL_LOGIN);
+	    } else if (isLoggedIn && !isHomeServlet && !(!isLogin || isLogoutServlet)) { // Redirect logged-in users to the index page if trying to access login page again
+	        res.sendRedirect(req.getContextPath() + StringUtil.URL_LANDINGPAGE);
+	    } else {
+	        // Allow access to the requested resource if user is logged in or accessing unprotected resources
+	        chain.doFilter(request, response);
+	    }
 
 	}
 

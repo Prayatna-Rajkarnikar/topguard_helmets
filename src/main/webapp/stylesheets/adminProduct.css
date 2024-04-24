@@ -1,119 +1,140 @@
 @charset "ISO-8859-1";
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   font-family: 'Roboto', sans-serif; 
 }
 
 body {
-    background-color: #3A4A4D;
-    color: #333;
+   background-color: #3A4A4D;
+}
+
+.back_button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.back_button:hover {
+    background-color: #45a049; /* Darker green */
 }
 
 .helmet-container {
-    max-width: 800px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: #F9FBFB;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+   max-width: 800px;
+   margin: 50px auto;
+   padding: 20px;
+   background-color: #F9FBFB;
+   border-radius: 8px;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 h1, h2 {
-    margin-bottom: 20px;
-    color: #3A4A4D;
+   margin-bottom: 20px;
+   color: #333;
 }
 
 .helmet-form-container {
-    margin-bottom: 30px;
+   margin-bottom: 30px;
 }
 
 .helmet-form-container label {
-    display: block;
-    margin-bottom: 10px;
-    color: #555;
+   display: block;
+   margin-bottom: 10px;
+   color: #555;
 }
 
 .helmet-form-container input[type="text"],
 .helmet-form-container input[type="number"],
 .helmet-form-container input[type="file"],
 .helmet-form-container button[type="submit"] {
-    width: calc(100% - 24px);
-    padding: 12px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    transition: border-color 0.3s ease;
+   width: 100%;
+   padding: 12px;
+   margin-bottom: 20px;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+   font-size: 16px;
+   transition: border-color 0.3s ease;
 }
 
 .helmet-form-container input[type="text"]:focus,
 .helmet-form-container input[type="number"]:focus,
 .helmet-form-container input[type="file"]:focus {
-    border-color: #3A4A4D;
+   border-color: #3A4A4D;
 }
 
 .helmet-form-container button[type="submit"] {
-    background-color: #3A4A4D;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 18px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+   background-color: #3A4A4D;
+   color: white;
+   border: none;
+   border-radius: 5px;
+   font-size: 18px;
+   cursor: pointer;
+   transition: background-color 0.3s ease;
 }
 
 .helmet-form-container button[type="submit"]:hover {
-    background-color: #7f9fa4;
+   background-color: #7f9fa4;
 }
 
 .helmet-table-container {
-    overflow-x: auto;
+   overflow-x: auto;
 }
 
 .helmet-table {
-    width: 100%;
-    border-collapse: collapse;
+   width: 100%;
+   border-collapse: collapse;
 }
 
 .helmet-table th, .helmet-table td {
-    padding: 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+   padding: 15px;
+   text-align: left;
+   border-bottom: 1px solid #ddd;
+   color: #333;
 }
 
 .helmet-table th {
-    background-color: #F9FBFB;
-    font-weight: bold;
+   background-color: #F9FBFB;
+   font-weight: bold;
 }
 
 .helmet-table td img {
-    max-width: 100px;
-    border-radius: 5px;
+   max-width: 100px;
+   border-radius: 5px;
 }
 
 .helmet-table td button {
-    padding: 8px 15px;
-    margin-right: 10px;
-    border: none;
-    border-radius: 5px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+   padding: 8px 15px;
+   margin-right: 10px;
+   margin: 10px;
+   border: none;
+   border-radius: 5px;
+   font-size: 14px;
+   cursor: pointer;
+   transition: background-color 0.3s ease;
 }
 
 .helmet-table td .edit-btn {
-    background-color: #4CAF50; /* Green */
-    color: white;
+   background-color: #4CAF50; /* Green */
+   color: white;
 }
 
 .helmet-table td .delete-btn {
-    background-color: #f44336; /* Red */
-    color: white;
+   background-color: #f44336; /* Red */
+   color: white;
 }
 
 .helmet-table td button:hover {
-    opacity: 0.7;
+   opacity: 0.7;
 }
+
+
+

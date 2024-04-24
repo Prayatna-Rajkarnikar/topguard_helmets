@@ -25,31 +25,19 @@ public class LogoutServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
+
 	}
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// Handle logout request (assuming this is a logout servlet)
-
-		// 1. Clear existing cookies
-		Cookie[] cookies = request.getCookies();
-		if (cookies != null) {
-			for (Cookie cookie : cookies) {
-				// Set max age to 0 to effectively delete the cookie
-				cookie.setMaxAge(0);
-				response.addCookie(cookie);
-			}
-		}
-
-		// 2. Invalidate user session (if it exists)
 		HttpSession session = request.getSession(false);
-		if (session != null) {
-			session.invalidate();
-		}
-
-		// 3. Redirect to login page
-		response.sendRedirect(request.getContextPath() + StringUtil.PAGE_URL_LOGIN);
+        if (session != null) {
+            System.out.println("Terminated session");
+            session.invalidate();
+            
+            response.sendRedirect(request.getContextPath() + StringUtil.PAGE_URL_LOGIN);
+        }
+		
 	}
 }

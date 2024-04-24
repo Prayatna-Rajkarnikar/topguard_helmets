@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import model.HelmetModel;
+import model.HelmetTableModel;
 import model.LoginStatus;
 import model.LoginUserModel;
 import model.PasswordEncryptionWithAes;
@@ -219,6 +220,48 @@ public class HelmetDbController {
         } catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();
             return -1; // Error
+        }
+    }
+    
+    public int deleteHelmet(String helmetName) {
+        try (Connection con = getConnection();
+             PreparedStatement st = con.prepareStatement("DELETE FROM helmet WHERE helmet_Name = ?")) {
+            st.setString(1, helmetName);
+            
+            int result = st.executeUpdate();
+
+            if (result > 0) {
+                return 1; // Success
+            } else {
+                return 0; // No rows affected
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
+            return -1; // Error
+        }
+    }
+
+    public ArrayList<HelmetTableModel> getAllHelmets() {
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM helmet");
+             ResultSet rs = stmt.executeQuery()) {
+
+            ArrayList<HelmetTableModel> helmets = new ArrayList<>();
+            while (rs.next()) {
+                HelmetTableModel helmet = new HelmetTableModel();
+                helmet.setHelmet_ID(rs.getInt("helmet_ID"));
+                helmet.setHelmet_Name(rs.getString("helmet_Name"));
+                helmet.setPrice(rs.getDouble("price"));
+                helmet.setBrand(rs.getString("brand"));
+                helmet.setColor(rs.getString("color"));
+                helmet.setSize(rs.getString("size"));
+                helmet.setUserImageUrl(rs.getString("helmet_image"));
+                helmets.add(helmet);
+            }
+            return helmets;
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return null; // Error
         }
     }
 }

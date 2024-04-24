@@ -23,7 +23,6 @@ public class HelmetModel {
 		this.size = size;
 		this.userImageUrl = getImageUrl(helmet_image);
 		
-		
 	}
 
 	public String getHelmet_Name() {

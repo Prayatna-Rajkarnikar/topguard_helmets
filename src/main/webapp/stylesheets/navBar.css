@@ -53,3 +53,20 @@ body {
   background-color: #F9FBFB; 
 }
 
+.nav_items li form input[type="submit"] {
+  background-color: #3A4A4D;
+  color: #FFFFFF;
+  border: none;
+  font-size: 16px;
+  padding: 2px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.nav_items li form input[type="submit"]:hover {
+  background-color: #729fab;
+}
+
+
+

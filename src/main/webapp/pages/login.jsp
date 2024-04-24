@@ -2,6 +2,9 @@
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+     <%
+String contextPath = request.getContextPath();
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,6 +24,7 @@
       
         <input type="text" placeholder="Enter username" id="usernameInput" name="<%=StringUtil.username%>">
         <input type="password" placeholder="Enter your password" id="passwordInput" name="<%=StringUtil.password%>">
+        
         <a href="forgetPw.jsp" id="forgotPasswordLink">Forgot password?</a>
         <input type="submit" class="button" value="Login" id="loginButton">
       </form>

@@ -5,7 +5,11 @@ import java.io.File;
 public class StringUtil {
 	
 	public static final String IMAGE_DIR_USER = "Users\\HP\\eclipse-workspace\\TopGuard_Helmets\\src\\main\\webapp\\resources\\user\\";
+	public static final String IMAGE_DIR_HELMET = "Users\\HP\\eclipse-workspace\\TopGuard_Helmets\\src\\main\\webapp\\resources\\helmets\\";
+
 	public static final String IMAGE_DIR_SAVE_PATH = "C:" + File.separator + IMAGE_DIR_USER;
+	public static final String IMAGE_DIR_SAVE_PATH_HELMET = "C:" + File.separator + IMAGE_DIR_HELMET;
+	
 	public static final String INSERT_NEW_USER = "INSERT INTO user "
             + "(user_name, full_name, email, phone_number, dob, address, password, gender, user_image, role)"
             + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -49,18 +53,19 @@ public class StringUtil {
 	// Start: JSP Route
 	public static final String PAGE_URL_LOGIN = "/pages/login.jsp";
 	public static final String PAGE_URL_REGISTER = "/pages/register.jsp";
-	public static final String PAGE_URL_WELCOME = "/pages/welcome.jsp";
 	public static final String PAGE_URL_HOME = "/pages/home.jsp";
 	public static final String PAGE_URL_FOOTER = "pages/footer.jsp";
 	public static final String PAGE_URL_HEADER = "pages/header.jsp";
-	public static final String URL_LOGIN = "/login.jsp";
-	public static final String URL_INDEX = "/index.jsp";
+	public static final String URL_LOGIN = "/pages/login.jsp";
+	public static final String URL_LANDINGPAGE = "/pages/landingPage.jsp";
+	public static final String URL_ADMIN_PANEL = "/pages/adminPanel.jsp";
+	public static final String URL_ADMIN_PRODUCT = "/pages/adminProduct.jsp";
 	// End: JSP Route
 
 	// Start: Servlet Route
-	public static final String SERVLET_URL_LOGIN = "/login";
-	public static final String SERVLET_URL_REGISTER = "/registerstudent";
-	public static final String SERVLET_URL_LOGOUT = "/logout";
+	public static final String SERVLET_URL_LOGIN = "/LoginServlet";
+	public static final String SERVLET_URL_REGISTER = "/RegisterServlet";
+	public static final String SERVLET_URL_LOGOUT = "/LogoutServlet";
 	// End: Servlet Route
 
 	// Start: Normal Text

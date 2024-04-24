@@ -7,17 +7,8 @@
     font-family: 'Roboto', sans-serif; 
 }
 
-.welcome {
-    text-align: center; /* Center align content */
-    margin-top: 20px; /* Add some top margin */
-    padding: 20px; /* Add padding for spacing */
-    background-color: #F9FBFB; /* Background color */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
-    border-radius: 10px; /* Add border radius for rounded corners */
-}
-
 .welcome h1 {
-    font-size: 24px; /* Adjust font size */
+    font-size: 15px; /* Adjust font size */
     color: #3A4A4D; /* Text color */
     margin-bottom: 10px; /* Add some bottom margin */
 }
@@ -27,6 +18,7 @@
     align-items: center;
     justify-content: center;
     min-height: 100vh;
+    padding: 10px;
     background-color: #F9FBFB;
 }
 
