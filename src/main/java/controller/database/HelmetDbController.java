@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+
 import model.HelmetModel;
 import model.HelmetTableModel;
 import model.LoginStatus;
@@ -223,22 +224,40 @@ public class HelmetDbController {
         }
     }
     
-    public int deleteHelmet(String helmetName) {
+    public int deleteHelmet(int deleteId) {
         try (Connection con = getConnection();
-             PreparedStatement st = con.prepareStatement("DELETE FROM helmet WHERE helmet_Name = ?")) {
-            st.setString(1, helmetName);
+             PreparedStatement st = con.prepareStatement("DELETE FROM helmet WHERE helmet_ID = ?")) {
+            st.setInt(1, deleteId);
             
-            int result = st.executeUpdate();
+            return st.executeUpdate();
 
-            if (result > 0) {
-                return 1; // Success
-            } else {
-                return 0; // No rows affected
-            }
         } catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();
             return -1; // Error
         }
+    }
+    
+    public int updateHelmet(HelmetModel helmetModel) {
+    	try (Connection con = getConnection();
+                PreparedStatement st = con.prepareStatement("UPDATE helmet SET helmet_Name = ?, price = ?, brand = ?, color = ?, size = ?, helmet_image = ? WHERE helmet_ID = ?")) 
+           {
+               st.setString(1, helmetModel.getHelmet_Name());
+               st.setDouble(2, helmetModel.getPrice());
+               st.setString(3, helmetModel.getBrand());
+               st.setString(4, helmetModel.getColor());
+               st.setString(5, helmetModel.getSize());
+               st.setString(6, helmetModel.getUserImageUrl());
+               int result = st.executeUpdate();
+
+               if (result > 0) {
+                   return 1; // Success
+               } else {
+                   return 0; // No rows affected
+               }
+           } catch (ClassNotFoundException | SQLException ex) {
+               ex.printStackTrace();
+               return -1; // Error
+           }
     }
 
     public ArrayList<HelmetTableModel> getAllHelmets() {

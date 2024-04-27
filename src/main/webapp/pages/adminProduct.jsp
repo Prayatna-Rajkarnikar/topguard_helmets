@@ -1,3 +1,4 @@
+<%@ page import="util.StringUtil" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -56,19 +57,25 @@
                     <c:forEach var="helmet" items="${helmets}">
                         <tr>
                             <td>${helmet.helmet_ID}</td>
-                            <td><img src="${pageContext.request.contextPath}/resources/images/user/${helmet.userImageUrl}" height="100" alt="Helmet Image"></td>
+                            <td><img src="${pageContext.request.contextPath}/resources/helmets/${helmet.userImageUrl}" height="100" alt="Helmet Image"></td>
                             <td>${helmet.helmet_Name}</td>
                             <td>${helmet.price}</td>
                             <td>${helmet.brand}</td>
                             <td>${helmet.color}</td>
                             <td>${helmet.size}</td>
                             <td>
+                            	<form action = "/TopGuard_Helmets/ChangeProductServlet" method = "post">
+                            	<input type = "hidden" name = "<%=StringUtil.UPDATE_ID%>" value = "${helmet.helmet_ID}">
                                 <button class="edit-btn">Edit</button>
-                                <button class="delete-btn">Delete</button>
-                            
+                                </form>
+                                
+                                <form action= "/TopGuard_Helmets/ChangeProductServlet" method="post">
+                                <input type="hidden" name = "<%=StringUtil.DELETE_ID %>" value="${helmet.helmet_ID}">
+                                	<button class="delete-btn">Delete</button>
+                            	</form>
                             </td>
                         </tr>
-                         </c:forEach>
+                   </c:forEach>
                 </c:if>
                     </tbody>
             </table>

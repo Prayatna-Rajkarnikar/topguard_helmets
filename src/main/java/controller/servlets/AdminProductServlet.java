@@ -30,7 +30,10 @@ public class AdminProductServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Handling GET requests if needed
+        // Fetch all helmets from the database
+        ArrayList<HelmetTableModel> helmets = dbController.getAllHelmets();
+        request.setAttribute("helmets", helmets);
+        request.getRequestDispatcher("/pages/adminProduct.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -53,7 +56,7 @@ public class AdminProductServlet extends HttpServlet {
         if (helmet_image != null) {
             HelmetModel helmetModel = new HelmetModel(helmet_name, price, brand, color, size, helmet_image);
 
-            String savePath = StringUtil.IMAGE_DIR_HELMET;
+            String savePath = StringUtil.IMAGE_DIR_SAVE_PATH_HELMET;
             String fileName = helmetModel.getUserImageUrl();
             if (!fileName.isEmpty() && fileName != null)
                 helmet_image.write(savePath + fileName);
@@ -61,6 +64,7 @@ public class AdminProductServlet extends HttpServlet {
             int result = dbController.addHelmet(helmetModel);
 
             if (result > 0) {
+                // Fetch all helmets from the database
                 ArrayList<HelmetTableModel> helmets = dbController.getAllHelmets();
                 request.setAttribute("helmets", helmets);
                 request.getRequestDispatcher("/pages/adminProduct.jsp").forward(request, response);
@@ -73,3 +77,5 @@ public class AdminProductServlet extends HttpServlet {
         }
     }
 }
+
+

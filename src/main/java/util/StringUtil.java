@@ -66,6 +66,8 @@ public class StringUtil {
 	public static final String SERVLET_URL_LOGIN = "/LoginServlet";
 	public static final String SERVLET_URL_REGISTER = "/RegisterServlet";
 	public static final String SERVLET_URL_LOGOUT = "/LogoutServlet";
+	public static final String SERVLET_URL_HOME = "/LogoutServlet";
+	public static final String SERVLET_URL_ = "/LogoutServlet";
 	// End: Servlet Route
 
 	// Start: Normal Text
@@ -73,5 +75,7 @@ public class StringUtil {
 	public static final String JSESSIONID = "JSESSIONID";
 	public static final String LOGIN = "Login";
 	public static final String LOGOUT = "Logout";
+	public static final String DELETE_ID= "deleteId";
+	public static final String UPDATE_ID= "updateId";
 		// End: Normal Text
 }
