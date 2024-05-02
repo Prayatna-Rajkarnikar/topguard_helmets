@@ -237,27 +237,30 @@ public class HelmetDbController {
         }
     }
     
-    public int updateHelmet(HelmetModel helmetModel) {
-    	try (Connection con = getConnection();
-                PreparedStatement st = con.prepareStatement("UPDATE helmet SET helmet_Name = ?, price = ?, brand = ?, color = ?, size = ?, helmet_image = ? WHERE helmet_ID = ?")) 
-           {
-               st.setString(1, helmetModel.getHelmet_Name());
-               st.setDouble(2, helmetModel.getPrice());
-               st.setString(3, helmetModel.getBrand());
-               st.setString(4, helmetModel.getColor());
-               st.setString(5, helmetModel.getSize());
-               st.setString(6, helmetModel.getUserImageUrl());
-               int result = st.executeUpdate();
+    public int updateHelmet(HelmetTableModel helmet) {
+        try (Connection con = getConnection();
+             PreparedStatement st = con.prepareStatement("UPDATE helmet SET helmet_Name = ?, price = ?, brand = ?, color = ?, size = ? WHERE helmet_ID = ?")) {
+        	st.setString(1, helmet.getHelmet_Name());
+            st.setDouble(2, helmet.getPrice());
+            st.setString(3, helmet.getBrand());
+            st.setString(4, helmet.getColor());
+            st.setString(5, helmet.getSize());
+            st.setInt(6, helmet.getHelmet_ID());
 
-               if (result > 0) {
-                   return 1; // Success
-               } else {
-                   return 0; // No rows affected
-               }
-           } catch (ClassNotFoundException | SQLException ex) {
-               ex.printStackTrace();
-               return -1; // Error
-           }
+
+            int result = st.executeUpdate();
+
+            if (result > 0) {
+                System.out.println("Database updated successfully");
+                return 1; // Success
+            } else {
+                System.out.println("No rows affected, database not updated");
+                return 0; // No rows affected
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return -1; // Error
+        }
     }
 
     public ArrayList<HelmetTableModel> getAllHelmets() {
@@ -283,4 +286,29 @@ public class HelmetDbController {
             return null; // Error
         }
     }
+    
+//    public HelmetTableModel getHelmetById(int helmetId) {
+//        try (Connection conn = getConnection();
+//             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM helmet WHERE helmet_ID = ?")) {
+//            stmt.setInt(1, helmetId);
+//            try (ResultSet rs = stmt.executeQuery()) {
+//                if (rs.next()) {
+//                    HelmetTableModel helmet = new HelmetTableModel();
+//                    helmet.setHelmet_ID(rs.getInt("helmet_ID"));
+//                    helmet.setHelmet_Name(rs.getString("helmet_Name"));
+//                    helmet.setPrice(rs.getDouble("price"));
+//                    helmet.setBrand(rs.getString("brand"));
+//                    helmet.setColor(rs.getString("color"));
+//                    helmet.setSize(rs.getString("size"));
+//                    helmet.setUserImageUrl(rs.getString("helmet_image"));
+//                    return helmet;
+//                }
+//            }
+//        } catch (SQLException | ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        return null; // Return null if helmet with the given ID is not found
+//    }
+
+    
 }

@@ -82,3 +82,20 @@ th {
 tbody tr:nth-child(even) {
   background-color: #f2f2f2;
 }
+
+/* Logout Button Styles */
+.sideNav form input[type="submit"] {
+  background-color: #3A4A4D; /* Background color */
+  color: white; /* Text color */
+  border: none; /* No border */
+  padding: 10px 20px; /* Padding */
+  cursor: pointer; /* Cursor style */
+  border-radius: 5px; /* Rounded corners */
+}
+
+.sideNav form input[type="submit"]:hover {
+  background-color: #2C3B3E; /* Darker background color on hover */
+}
+
+
+

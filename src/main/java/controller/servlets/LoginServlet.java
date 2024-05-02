@@ -50,6 +50,7 @@ public class LoginServlet extends HttpServlet {
                 HttpSession userSession = request.getSession();
                 userSession.setAttribute("user_name", username);
                 userSession.setMaxInactiveInterval(30 * 30);
+                userSession.setAttribute("loggedIn", true);
                 userSession.setAttribute("id", userSession.getId());
                 response.sendRedirect(request.getContextPath() + StringUtil.PAGE_URL_HOME);
             }

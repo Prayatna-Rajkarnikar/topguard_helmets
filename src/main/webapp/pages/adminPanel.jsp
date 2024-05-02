@@ -1,3 +1,4 @@
+ <%@page import="util.StringUtil"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -8,7 +9,14 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/stylesheets/adminPanel.css" />
 </head>
 <body>
-	  <body>
+	<%
+    // Get the session and request objects
+    HttpSession userSession = request.getSession();
+    String currentUser = (String) userSession.getAttribute(StringUtil.username);
+    String contextPath = request.getContextPath();
+    
+	%>
+	
     <div class="sideNav">
         <nav>     
             <ul>
@@ -33,9 +41,23 @@
                     </a>
                 </li>
                 <li>
-                    <a href="" class="logout">
-                        <span class="navItem">Log out</span>
-                    </a>
+                    <form action="<%
+                    // Conditionally set the action URL based on user session
+                    if (currentUser != null) {
+                        out.print(contextPath + StringUtil.SERVLET_URL_LOGOUT);
+                    } else {
+                        out.print(contextPath + StringUtil.PAGE_URL_LOGIN);
+                    }
+                %>" method="post">
+                    <input type="submit" value="<%
+                        // Conditionally set the button label based on user session
+                        if (currentUser != null) {
+                            out.print(StringUtil.LOGOUT);
+                        } else {
+                            out.print(StringUtil.LOGIN);
+                        }
+                    %>"/>
+                </form>
                 </li>
             </ul>
         </nav>
@@ -99,8 +121,5 @@
             </table>
         </div>
     </section>
-</body>
-</body>
-
 </body>
 </html>

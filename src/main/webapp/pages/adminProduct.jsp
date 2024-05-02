@@ -64,15 +64,20 @@
                             <td>${helmet.color}</td>
                             <td>${helmet.size}</td>
                             <td>
-                            	<form action = "/TopGuard_Helmets/ChangeProductServlet" method = "post">
-                            	<input type = "hidden" name = "<%=StringUtil.UPDATE_ID%>" value = "${helmet.helmet_ID}">
-                                <button class="edit-btn">Edit</button>
-                                </form>
-                                
-                                <form action= "/TopGuard_Helmets/ChangeProductServlet" method="post">
-                                <input type="hidden" name = "<%=StringUtil.DELETE_ID %>" value="${helmet.helmet_ID}">
-                                	<button class="delete-btn">Delete</button>
-                            	</form>
+                            	   <form action="${pageContext.request.contextPath}/EditHelmetServlet" method="post">
+                                        <input type="hidden" id="helmet_id" name="helmet_id" value="${helmet.helmet_ID}">
+                                        <input type="hidden" id="helmet_name" name="helmet_name" value="${helmet.helmet_Name}">
+                                        <input type="hidden" id="price" name="price" value="${helmet.price}">
+                                        <input type="hidden" id="brand" name="brand" value="${helmet.brand}">
+                                        <input type="hidden" id="color" name="color" value="${helmet.color}">
+                                        <input type="hidden" id="size" name="size" value="${helmet.size}">
+                                        <button type="submit" class="edit-btn">Edit</button>
+                                    </form>
+
+                                    <form action="${pageContext.request.contextPath}/ChangeProductServlet" method="post">
+                                        <input type="hidden" name="<%=StringUtil.DELETE_ID %>" value="${helmet.helmet_ID}">
+                                        <button type="submit" class="delete-btn">Delete</button>
+                                    </form>
                             </td>
                         </tr>
                    </c:forEach>

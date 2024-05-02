@@ -1,0 +1,90 @@
+@charset "ISO-8859-1";
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif; 
+}
+
+body {
+    background-color: #F9FBFB;
+}
+
+.heading h1 {
+    margin: 0 auto; 
+    margin-bottom: 20px;
+    letter-spacing: 1.5px;
+    text-align: center;
+    font-size: 40px;
+    color: #3A4A4D;
+}
+
+.helmet_container {
+    max-width: 1180px;
+    width: 90%;
+    padding: 15px;
+    margin: 0 auto;
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 35px;
+}
+
+.helmet_box {
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow: 5px 5px 10px 1px rgba(0, 0, 0, 0.12);
+    gap: 17.5px;
+}
+
+.helmet_box img {
+    width: 100%;
+}
+
+.helmet_box img:hover {
+    cursor: pointer;
+    opacity: 0.95;
+}
+
+.helmet_box h2 {
+    font-size: 20px;
+}
+
+.helmet_box p {
+    padding: 0 20px;
+    font-size: 12.5px;
+    line-height: 1.35;
+    color: #6c757d;
+}
+
+.helmet_box span {
+    font-weight: 800;
+    font-size: 18px;
+}
+
+
+.helmet_box .options {
+    margin-bottom: 25px;
+}
+
+.helmet_box .options a {
+    color: white;
+    background-color: #3A4A4D;
+    display: inline-block;
+    padding: 10px 15px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 12px;
+    border-radius: 50px;
+}
+
+.helmet_box .options a:hover {
+    background-color: #729fab;
+}
+
+
