@@ -11,11 +11,11 @@ public class StringUtil {
 	public static final String IMAGE_DIR_SAVE_PATH_HELMET = "C:" + File.separator + IMAGE_DIR_HELMET;
 	
 	public static final String INSERT_NEW_USER = "INSERT INTO user "
-            + "(user_name, full_name, email, phone_number, dob, address, password, gender, user_image, role)"
+            + "(userName, user_fullName, email, contact_number, dob, address, password, gender, user_image, role)"
             + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 	
-    public static final String GET_REGISTER_USER_INFO = "SELECT * FROM user WHERE user_name = ?";
+    public static final String GET_USER_INFO = "SELECT * FROM user WHERE userName = ?";
     
     public static final String username = "user_name";
     public static final String fullName = "full_Name";
@@ -76,6 +76,6 @@ public class StringUtil {
 	public static final String LOGIN = "Login";
 	public static final String LOGOUT = "Logout";
 	public static final String DELETE_ID= "deleteId";
-	public static final String UPDATE_ID= "updateId";
+
 		// End: Normal Text
 }

@@ -1,21 +1,19 @@
 package model;
 
 import java.io.File;
-
-import java.io.Serializable;
 import java.time.LocalDate;
 
 import javax.servlet.http.Part;
 
 import util.StringUtil;
 
-public class UserModel implements Serializable{
-	private static final long serialVersionUID = 1L;
+public class UpdateUserModel {
 	
-	private String user_name;
-	private String full_name;
+	private int user_id;
+	private String userName;
+	private String fullName;
 	private String email;
-	private String phone_number;
+	private String phoneNumber;
 	private LocalDate dob;
 	private String address;	
 	private String password;
@@ -23,15 +21,16 @@ public class UserModel implements Serializable{
 	private String userImageUrl;
 	private String role;
 	
-	public UserModel() {}
-
-	public UserModel(String user_name, String full_name, String email, String phone_number, LocalDate dob,
+	public UpdateUserModel(){}
+	
+	public UpdateUserModel(int user_id, String userName, String fullName, String email, String phoneNumber, LocalDate dob,
 			String address, String password, String gender, Part user_image, String role) {
 		super();
-		this.user_name = user_name;
-		this.full_name = full_name;
+		this.user_id = user_id;
+		this.userName = userName;
+		this.fullName = fullName;
 		this.email = email;
-		this.phone_number = phone_number;
+		this.phoneNumber = phoneNumber;
 		this.dob = dob;
 		this.address = address;
 		this.password = password;
@@ -40,20 +39,39 @@ public class UserModel implements Serializable{
 		this.role = role;
 	}
 
-	public String getUser_name() {
-		return user_name;
+	
+	public int getUser_id() {
+		return user_id;
 	}
 
-	public void setUser_name(String user_name) {
-		this.user_name = user_name;
+	public void setUser_id(int user_id) {
+		this.user_id = user_id;
 	}
 
-	public String getFull_name() {
-		return full_name;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setFull_name(String full_name) {
-		this.full_name = full_name;
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	
+
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 
 	public String getEmail() {
@@ -64,13 +82,7 @@ public class UserModel implements Serializable{
 		this.email = email;
 	}
 
-	public String getPhone_number() {
-		return phone_number;
-	}
-
-	public void setPhone_number(String phone_number) {
-		this.phone_number = phone_number;
-	}
+	
 
 	public LocalDate getDob() {
 		return dob;
@@ -145,4 +157,3 @@ public class UserModel implements Serializable{
 	}
 
 }
-

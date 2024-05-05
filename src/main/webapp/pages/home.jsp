@@ -10,6 +10,7 @@
 <jsp:include page="navBar.jsp"/>
 	<%
 		String userSession = (String) session.getAttribute(StringUtil.username);
+		out.print("Session"+userSession);
 	 	String idSession = (String) session.getAttribute("id");
 	%>
 	<div class="welcome">

@@ -1,71 +1,83 @@
 @charset "ISO-8859-1";
+
 * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Roboto', sans-serif;
-        }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif; 
+}
 
-        body {
-            min-height: 100vh;
-            width: 100%;
-            background: #3A4A4D;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
+body {
+  min-height: 100vh;
+  width: 100%;
+  background: #3A4A4D;
+}
 
-        .profile_container {
-            background: #fff;
-            border-radius: 10px;
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-            padding: 2rem;
-            width: 100%;
-            max-width: 600px;
-            margin: auto;
-        }
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 15px;
+  max-width: 430px;
+  width: 100%;
+  background: #fff;
+  border-radius: 7px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  padding: 2rem;
+}
 
-        .profile_container h1 {
-            font-size: 2rem;
-            font-weight: 600;
-            text-align: center;
-            margin-bottom: 1.5rem;
-            color: #333;
-        }
+.container h1 {
+  font-size: 2rem;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
 
-        .user-details {
-            padding: 1rem 0;
-            border-bottom: 1px solid #ddd;
-            margin-bottom: 1.5rem;
-        }
+.container p {
+  font-size: 17px;
+  margin-bottom: 1.3rem;
+}
 
-        .user-details p {
-            font-size: 1.1rem;
-            color: #555;
-            margin-bottom: 0.5rem;
-        }
+.container a {
+  font-size: 16px;
+  color: #3A4A4D;
+  margin: 5px;
+  text-decoration: none;
+}
 
-        .updateButton {
-            text-align: center;
-        }
+.container a:hover {
+  text-decoration: underline;
+}
 
-        .update-button a {
-            text-decoration: none;
-        }
+.container button {
+  height: 60px;
+  width: 100%;
+  padding: 0 15px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  margin-top: 1.2rem;
+  background-color: #3A4A4D;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.4s;
+}
 
-        .update-button button {
-            background-color: #3A4A4D;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            padding: 12px 20px;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: background-color 0.4s;
-            outline: none;
-        }
+.container button:hover {
+  background-color: #7f9fa4;
+}
 
-        .update-button button:hover {
-            background-color: #7f9fa4;
-        }
+.container .image img {
+  border-radius: 50%;
+   width: 150px; /* Set a fixed width */
+  height: 150px; 
+  align-content: center;
+}
+
+
+.container form {
+  margin-top: 10px;
+}

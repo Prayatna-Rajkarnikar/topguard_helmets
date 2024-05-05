@@ -34,7 +34,6 @@ public class ChangeProductServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String deleteIdString = request.getParameter("deleteId");
-        //String updateIdString = request.getParameter("updateId");
 
         if (deleteIdString != null && !deleteIdString.isEmpty()) {
             int deleteId = Integer.parseInt(deleteIdString);

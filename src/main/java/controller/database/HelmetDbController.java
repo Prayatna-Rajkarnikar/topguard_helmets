@@ -14,7 +14,8 @@ import model.HelmetTableModel;
 import model.LoginStatus;
 import model.LoginUserModel;
 import model.PasswordEncryptionWithAes;
-import model.UserModel;
+import model.UpdateUserModel;
+import model.HelmetUserModel;
 import util.StringUtil;
 
 
@@ -28,19 +29,19 @@ public class HelmetDbController {
         return DriverManager.getConnection(url, user, pass);
     }
     
-    public ArrayList<UserModel> getAllStudentsInfo() {
+    public ArrayList<HelmetUserModel> getAllStudentsInfo() {
     	try (Connection con = getConnection()){
-    		PreparedStatement st = con.prepareStatement(StringUtil.GET_REGISTER_USER_INFO);
+    		PreparedStatement st = con.prepareStatement(StringUtil.GET_USER_INFO);
     		ResultSet pr = st.executeQuery();
     		
-    		ArrayList<UserModel> userModels = new ArrayList<>();
+    		ArrayList<HelmetUserModel> userModels = new ArrayList<>();
     		while (pr.next()) {
-    			UserModel userModel = new UserModel();
+    			HelmetUserModel userModel = new HelmetUserModel();
         		
-    			userModel.setUser_name(pr.getString("user_name"));
-    			userModel.setFull_name(pr.getString("full_name"));
+    			userModel.setUserName(pr.getString("userName"));
+    			userModel.setFullName(pr.getString("full_name"));
     			userModel.setEmail(pr.getString("email"));
-    			userModel.setPhone_number(pr.getString("Phone_number"));
+    			userModel.setPhoneNumber(pr.getString("Phone_number"));
     			userModel.setDob(pr.getDate("dob").toLocalDate());
     			userModel.setAddress(pr.getString("address"));
     			userModel.setGender(pr.getString("gender"));
@@ -54,7 +55,7 @@ public class HelmetDbController {
     }
     public boolean isUsernameExists(String username) {
         try (Connection con = getConnection();
-             PreparedStatement st = con.prepareStatement("SELECT COUNT(*) FROM user WHERE user_name = ?")) {
+             PreparedStatement st = con.prepareStatement("SELECT COUNT(*) FROM user WHERE userName = ?")) {
             st.setString(1, username);
             try (ResultSet rs = st.executeQuery()) {
                 if (rs.next()) {
@@ -86,7 +87,7 @@ public class HelmetDbController {
 
     public boolean isPhoneNumberExists(String phoneNumber) {
         try (Connection con = getConnection();
-             PreparedStatement st = con.prepareStatement("SELECT COUNT(*) FROM user WHERE phone_number = ?")) {
+             PreparedStatement st = con.prepareStatement("SELECT COUNT(*) FROM user WHERE contact_number = ?")) {
             st.setString(1, phoneNumber);
             try (ResultSet rs = st.executeQuery()) {
                 if (rs.next()) {
@@ -100,16 +101,16 @@ public class HelmetDbController {
         return false;
     }
     
-    public int addNewUser(UserModel helmetModel) {
+    public int addNewUser(HelmetUserModel helmetModel) {
         try (Connection con = getConnection();
              PreparedStatement st = con.prepareStatement(StringUtil.INSERT_NEW_USER)) {
-            st.setString(1, helmetModel.getUser_name());
-            st.setString(2, helmetModel.getFull_name());
+            st.setString(1, helmetModel.getUserName());
+            st.setString(2, helmetModel.getFullName());
             st.setString(3, helmetModel.getEmail());
-            st.setString(4, helmetModel.getPhone_number());
+            st.setString(4, helmetModel.getPhoneNumber());
             st.setDate(5, Date.valueOf(helmetModel.getDob()));
             st.setString(6, helmetModel.getAddress());
-            st.setString(7, PasswordEncryptionWithAes.encrypt(helmetModel.getUser_name(), helmetModel.getPassword()));
+            st.setString(7, PasswordEncryptionWithAes.encrypt(helmetModel.getUserName(), helmetModel.getPassword()));
             st.setString(8, helmetModel.getGender());
             st.setString(9, helmetModel.getUserImageUrl());
             st.setString(10, helmetModel.getRole());
@@ -129,21 +130,21 @@ public class HelmetDbController {
     
     public LoginStatus getUserLoginInfo(LoginUserModel loginModel) {
         try (Connection con = getConnection()) {
-            PreparedStatement st = con.prepareStatement(StringUtil.GET_REGISTER_USER_INFO);
+            PreparedStatement st = con.prepareStatement(StringUtil.GET_USER_INFO);
 
             // Set the username in the first parameter of the prepared statement
-            st.setString(1, loginModel.getUser_name());
+            st.setString(1, loginModel.getUserName());
 
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
 
-                String userDb = rs.getString("user_name");
+                String userDb = rs.getString("userName");
 
                 String encryptedPwd = rs.getString(StringUtil.password);
 
                 String decryptedPwd = PasswordEncryptionWithAes.decrypt(encryptedPwd, userDb);
 
-                if (userDb.equalsIgnoreCase(loginModel.getUser_name()) && decryptedPwd != null && decryptedPwd.equals((loginModel).getPassword())) {
+                if (userDb.equalsIgnoreCase(loginModel.getUserName()) && decryptedPwd != null && decryptedPwd.equals((loginModel).getPassword())) {
                     String role = rs.getString("role"); // Assuming 'role' is the column name for the user's role
                     if (role != null) {
                         // User role found, return login result with role
@@ -168,7 +169,7 @@ public class HelmetDbController {
     
     public int updateUserPassword(String username, String new_password) {
         try (Connection con = getConnection();
-             PreparedStatement st = con.prepareStatement("UPDATE user SET password = ? WHERE user_name = ?")) {
+             PreparedStatement st = con.prepareStatement("UPDATE user SET password = ? WHERE userName = ?")) {
             st.setString(1, PasswordEncryptionWithAes.encrypt(username, new_password));
             st.setString(2, username);
 
@@ -262,6 +263,50 @@ public class HelmetDbController {
             return -1; // Error
         }
     }
+    
+    public int updateProfile(HelmetUserModel user) {
+        try (Connection con = getConnection();
+             PreparedStatement st = con.prepareStatement("UPDATE user SET user_fullName=?, email=?, contact_number=?, address=? WHERE userName=?")) {         
+            st.setString(1, user.getFullName());
+            st.setString(2, user.getEmail());
+            st.setString(3, user.getPhoneNumber());
+            st.setString(4, user.getAddress());
+            st.setString(5, user.getUserName());
+
+            return st.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return -1; // Error
+        }
+    }
+    
+    public HelmetUserModel getUserProfile(String username) {
+        try (Connection con = getConnection()) {
+            PreparedStatement st = con.prepareStatement("SELECT * FROM user WHERE userName = ?");
+            st.setString(1, username);
+            ResultSet rs = st.executeQuery();
+
+            if (rs.next()) {
+            	HelmetUserModel userProfile = new HelmetUserModel();
+                userProfile.setUserName(rs.getString("userName"));
+                userProfile.setFullName(rs.getString("user_fullName"));
+                userProfile.setEmail(rs.getString("email"));
+                userProfile.setPhoneNumber(rs.getString("contact_number"));
+                userProfile.setDob(rs.getDate("dob").toLocalDate());
+                userProfile.setAddress(rs.getString("address"));
+                userProfile.setImageUrlFromDB(rs.getString("user_image"));
+                return userProfile;
+            } else {
+                // User not found in the database
+                return null;
+            }
+        } catch (SQLException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+
 
     public ArrayList<HelmetTableModel> getAllHelmets() {
         try (Connection conn = getConnection();
@@ -287,28 +332,5 @@ public class HelmetDbController {
         }
     }
     
-//    public HelmetTableModel getHelmetById(int helmetId) {
-//        try (Connection conn = getConnection();
-//             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM helmet WHERE helmet_ID = ?")) {
-//            stmt.setInt(1, helmetId);
-//            try (ResultSet rs = stmt.executeQuery()) {
-//                if (rs.next()) {
-//                    HelmetTableModel helmet = new HelmetTableModel();
-//                    helmet.setHelmet_ID(rs.getInt("helmet_ID"));
-//                    helmet.setHelmet_Name(rs.getString("helmet_Name"));
-//                    helmet.setPrice(rs.getDouble("price"));
-//                    helmet.setBrand(rs.getString("brand"));
-//                    helmet.setColor(rs.getString("color"));
-//                    helmet.setSize(rs.getString("size"));
-//                    helmet.setUserImageUrl(rs.getString("helmet_image"));
-//                    return helmet;
-//                }
-//            }
-//        } catch (SQLException | ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//        return null; // Return null if helmet with the given ID is not found
-//    }
-
     
 }

@@ -1,7 +1,6 @@
 package controller.servlets;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,18 +9,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import controller.database.HelmetDbController;
-import model.HelmetModel;
-import model.HelmetTableModel;
+
 
 @WebServlet("/EditHelmetServlet")
 public class EditHelmetServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private HelmetDbController dbController;
+	
 
 	public EditHelmetServlet() {
 		super();
-		this.dbController = new HelmetDbController();
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

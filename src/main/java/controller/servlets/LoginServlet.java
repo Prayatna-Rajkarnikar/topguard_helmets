@@ -26,11 +26,11 @@ public class LoginServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter(StringUtil.username);
+        String userName = request.getParameter(StringUtil.username);
         String password = request.getParameter(StringUtil.password);
 
-        LoginUserModel loginUserModel = new LoginUserModel(username, password);
-        loginUserModel.setUser_name(username);
+        LoginUserModel loginUserModel = new LoginUserModel(userName, password);
+        loginUserModel.setUserName(userName);
         loginUserModel.setPassword(password);
 
         // Call DBController to validate login credentials
@@ -40,7 +40,7 @@ public class LoginServlet extends HttpServlet {
             if ("admin".equals(loginResult.getRole())) {
                 // User is admin, redirect to admin dashboard
                 HttpSession userSession = request.getSession();
-                userSession.setAttribute("user_name", username);
+                userSession.setAttribute("user_name", userName);
                 userSession.setAttribute("role", "admin"); // Set admin role
                 userSession.setMaxInactiveInterval(30 * 30);
                 userSession.setAttribute("loggedIn", true);
@@ -48,7 +48,7 @@ public class LoginServlet extends HttpServlet {
             } else {
                 // User is not admin, redirect to home page
                 HttpSession userSession = request.getSession();
-                userSession.setAttribute("user_name", username);
+                userSession.setAttribute("user_name", userName);
                 userSession.setMaxInactiveInterval(30 * 30);
                 userSession.setAttribute("loggedIn", true);
                 userSession.setAttribute("id", userSession.getId());
@@ -58,13 +58,13 @@ public class LoginServlet extends HttpServlet {
         } else if (loginResult.getStatus() == -1) {
             // Username not found
             request.setAttribute(StringUtil.MESSAGE_ERROR, "Create new account");
-            request.setAttribute(StringUtil.username, username);
+            request.setAttribute(StringUtil.username, userName);
             request.getRequestDispatcher(StringUtil.PAGE_URL_LOGIN).forward(request, response);
         } else {
             // Internal server error
             System.out.println("No login");
             request.setAttribute(StringUtil.MESSAGE_ERROR, StringUtil.MESSAGE_ERROR_SERVER);
-            request.setAttribute(StringUtil.username, username);
+            request.setAttribute(StringUtil.username, userName);
             request.getRequestDispatcher(StringUtil.PAGE_URL_LOGIN).forward(request, response);
         }
     }

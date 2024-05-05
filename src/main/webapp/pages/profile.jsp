@@ -1,100 +1,74 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@page import="model.UpdateUserModel"%>
+<%@ page import="controller.database.HelmetDbController" %>
+<%@ page import="model.LoginUserModel" %>
+<%@ page import="model.HelmetUserModel" %>
+<%@ page import = "util.StringUtil" %>
+<%@ page import="model.LoginStatus" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%
+    // Check if the user is logged in
+    // Assuming you have a session attribute named "loggedInUser" that stores the logged-in user's username
+    String loggedInUsername = (String) session.getAttribute(StringUtil.username);
+    if (loggedInUsername == null || loggedInUsername.isEmpty()) {
+        // Redirect to login page if not logged in
+        response.sendRedirect(request.getContextPath() + "/pages/login.jsp");
+        return; // Stop further execution
+    }
+
+    // Initialize the database controller
+    HelmetDbController dbController = new HelmetDbController();
+    
+    // Retrieve user profile information from the database based on the logged-in username
+    HelmetUserModel userProfile = dbController.getUserProfile(loggedInUsername);
+
+    // Check if user profile is null
+    if (userProfile == null) {
+        // Handle case where user profile is not found
+        // For example, display an error message
+        out.println("User profile not found");
+        return; // Stop further execution
+    }
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/stylesheets/profile.css" />
-
-<!-- <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Roboto', sans-serif;
-        }
-
-        body {
-            min-height: 100vh;
-            width: 100%;
-            background: #3A4A4D;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .profile_container {
-            background: #fff;
-            border-radius: 10px;
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-            padding: 2rem;
-            width: 100%;
-            max-width: 600px;
-            margin: auto;
-        }
-
-        .profile_container h1 {
-            font-size: 2rem;
-            font-weight: 600;
-            text-align: center;
-            margin-bottom: 1.5rem;
-            color: #333;
-        }
-
-        .user-details {
-            padding: 1rem 0;
-            border-bottom: 1px solid #ddd;
-            margin-bottom: 1.5rem;
-        }
-
-        .user-details p {
-            font-size: 1.1rem;
-            color: #555;
-            margin-bottom: 0.5rem;
-        }
-
-        .updateButton {
-            text-align: center;
-        }
-
-        .update-button a {
-            text-decoration: none;
-        }
-
-        .update-button button {
-            background-color: #3A4A4D;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            padding: 12px 20px;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: background-color 0.4s;
-            outline: none;
-        }
-
-        .update-button button:hover {
-            background-color: #7f9fa4;
-        }
-    </style> -->
+    <meta charset="UTF-8">
+    <title>Profile Page</title>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/stylesheets/profile.css" />
 </head>
 <body>
-<jsp:include page="navBar.jsp"/>
-<div class="profile_container">
-    <h1>Profile</h1>
-    <div class="user-details">
-        <p><b>Username:JohnDoe123</b></p>
-        <p><b>Full Name:</b> John Doe</p>
-        <p><b>Email:</b> johndoe@example.com</p>
-        <p><b>Address:</b> 123 Main Street, Cityville</p>
+    <jsp:include page="navBar.jsp"/>
+
+    <div class="container">
+        <div class="box">
+            <h1>Profile</h1>
+            <div class="image">
+                <img src="${pageContext.request.contextPath}/resources/user/${userProfile.userImageUrl}" alt="User Image">
+            </div>
+            <div class="user-details">
+                <p><strong>Username:</strong> <%= userProfile.getUserName() %></p>
+                <p><strong>Full Name:</strong> <%= userProfile.getFullName() %></p>
+                <p><strong>Email:</strong> <%= userProfile.getEmail() %></p>
+                <p><strong>Phone Number:</strong> <%= userProfile.getPhoneNumber() %></p>
+                <p><strong>DOB:</strong> <%= userProfile.getDob() %></p>
+                <p><strong>Address:</strong> <%= userProfile.getAddress() %></p>
+            </div>
+            <form action="${pageContext.request.contextPath}/EditProfileServlet" method="post">
+                <input type="hidden" id="userName" name="userName" value="<%= userProfile.getUserName() %>">
+                <input type="hidden" id="userFullName" name="userFullName" value="<%= userProfile.getFullName() %>">
+                <input type="hidden" id="userEmail" name="userEmail" value="<%= userProfile.getEmail() %>">
+                <input type="hidden" id="contactNumber" name="contactNumber" value="<%= userProfile.getPhoneNumber() %>">
+                <input type="hidden" id="address" name="address" value="<%= userProfile.getAddress() %>">
+                <div class="updateButton">
+                    <button type="submit">Update</button>
+                </div>
+            </form>
+
+            <a href="forgetPw.jsp" id="forgotPasswordLink">Reset Password</a>
+        </div>
     </div>
-    <div class="updateButton">
-        <a href="../DS UI/editProfile.html" target="_self">
-            <button>Update <i class="fas fa-edit"></i></button>
-        </a>
-    </div>
-</div>
 </body>
 </html>

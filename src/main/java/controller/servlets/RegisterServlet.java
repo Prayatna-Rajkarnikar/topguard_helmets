@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import controller.database.HelmetDbController;
-import model.UserModel;
+import model.HelmetUserModel;
 import util.StringUtil;
 
 @WebServlet(asyncSupported = true, urlPatterns = { "/RegisterServlet" })
@@ -41,10 +41,10 @@ public class RegisterServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String user_name = request.getParameter(StringUtil.username);
-		String full_name = request.getParameter(StringUtil.fullName);
+		String userName = request.getParameter(StringUtil.username);
+		String fullName = request.getParameter(StringUtil.fullName);
 		String email = request.getParameter(StringUtil.email);
-		String phone_number = request.getParameter(StringUtil.phoneNumber);
+		String phoneNumber = request.getParameter(StringUtil.phoneNumber);
 		String dobString = request.getParameter(StringUtil.dobString);
 	     // Initialize dob variable
 	     // Initialize dob variable
@@ -74,21 +74,21 @@ public class RegisterServlet extends HttpServlet {
 		String gender = request.getParameter(StringUtil.gender);
 		Part user_image = request.getPart("user_image");
 
-		if (!isValidName(full_name)) {
+		if (!isValidName(fullName)) {
 			String errorMessage = "Invalid Full name. Please don't enter symbols and numerical value.";
 			request.setAttribute(StringUtil.MESSAGE_ERROR, errorMessage);
 			request.getRequestDispatcher(StringUtil.PAGE_URL_REGISTER).forward(request, response);
 			return;
 		}
 //        
-		if (user_name.length() < 6) {
+		if (userName.length() < 6) {
 			String errorMessage = "Invalid User name. Please enter more than 6 characters";
 			request.setAttribute(StringUtil.MESSAGE_ERROR, errorMessage);
 			request.getRequestDispatcher(StringUtil.PAGE_URL_REGISTER).forward(request, response);
 			return;
 		}
 
-		if (!user_name.matches("^[a-zA-Z0-9]{6,}$")) {
+		if (!userName.matches("^[a-zA-Z0-9]{6,}$")) {
 			String errorMessage = "Invalid User name. Please don't enter symbols.";
 			request.setAttribute(StringUtil.MESSAGE_ERROR, errorMessage);
 			request.getRequestDispatcher(StringUtil.PAGE_URL_REGISTER).forward(request, response);
@@ -101,13 +101,13 @@ public class RegisterServlet extends HttpServlet {
 			return;
 		}
 
-		if (phone_number.length() != 14) {
+		if (phoneNumber.length() != 14) {
 			request.setAttribute(StringUtil.MESSAGE_ERROR, "Invalid number. Phone Number must be of 14 characters.");
 			request.getRequestDispatcher(StringUtil.PAGE_URL_REGISTER).forward(request, response);
 			return;
 		}
 
-		if (!phone_number.startsWith("+")) {
+		if (!phoneNumber.startsWith("+")) {
 			request.setAttribute(StringUtil.MESSAGE_ERROR, "Invalid number. Phone Number must start with + sign.");
 			request.getRequestDispatcher(StringUtil.PAGE_URL_REGISTER).forward(request, response);
 			return;
@@ -135,7 +135,7 @@ public class RegisterServlet extends HttpServlet {
 		 request.getRequestDispatcher(StringUtil.PAGE_URL_REGISTER).forward(request,
 		 response); return; }
 		 
-        if (dbController.isUsernameExists(user_name)) {
+        if (dbController.isUsernameExists(userName)) {
             String errorMessage = "Username already exists. Please choose a different username.";
             request.setAttribute(StringUtil.MESSAGE_ERROR, errorMessage);
             request.getRequestDispatcher(StringUtil.PAGE_URL_REGISTER).forward(request, response);
@@ -151,14 +151,14 @@ public class RegisterServlet extends HttpServlet {
         }
 
         // Check if phone number already exists
-        if (dbController.isPhoneNumberExists(phone_number)) {
+        if (dbController.isPhoneNumberExists(phoneNumber)) {
             String errorMessage = "Phone number already exists. Please use a different phone number.";
             request.setAttribute(StringUtil.MESSAGE_ERROR, errorMessage);
             request.getRequestDispatcher(StringUtil.PAGE_URL_REGISTER).forward(request, response);
             return;
         }
 
-		UserModel user = new UserModel(user_name, full_name, email, phone_number, dob, address, retypePassword, gender, user_image, "user");
+		HelmetUserModel user = new HelmetUserModel(userName, fullName, email, phoneNumber, dob, address, retypePassword, gender, user_image, "user");
 
 		String savePath = StringUtil.IMAGE_DIR_SAVE_PATH;
         String fileName = user.getUserImageUrl();
