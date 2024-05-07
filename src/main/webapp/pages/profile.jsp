@@ -46,7 +46,8 @@
         <div class="box">
             <h1>Profile</h1>
             <div class="image">
-                <img src="${pageContext.request.contextPath}/resources/user/${userProfile.userImageUrl}" alt="User Image">
+            	<img src="${pageContext.request.contextPath}/resources/user/account.png" alt="User Image">
+                <%-- <img src="${pageContext.request.contextPath}/resources/user/${userProfile.getImageUrl}" alt="User Image"> --%>
             </div>
             <div class="user-details">
                 <p><strong>Username:</strong> <%= userProfile.getUserName() %></p>

@@ -8,11 +8,12 @@
 
 body {
     background-color: #F9FBFB;
+    margin-top: 50px;
 }
 
 .heading h1 {
-    margin: 0 auto; 
     margin-bottom: 20px;
+    margin-top: 50px;
     letter-spacing: 1.5px;
     text-align: center;
     font-size: 40px;

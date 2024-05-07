@@ -13,7 +13,7 @@
 <div class="contact_container">
     <div class="content">
       <div class="image-box">
-        <img src="images/helmet3.jpg" alt="">
+        <img src="${pageContext.request.contextPath}/resources/images/helmet3.jpg" alt="">
       </div>
       <form action="#">
         <div class="topic">Get in touch</div>

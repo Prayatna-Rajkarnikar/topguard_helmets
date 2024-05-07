@@ -53,6 +53,7 @@ public class HelmetDbController {
 			return null;
 		}	
     }
+    
     public boolean isUsernameExists(String username) {
         try (Connection con = getConnection();
              PreparedStatement st = con.prepareStatement("SELECT COUNT(*) FROM user WHERE userName = ?")) {
@@ -294,7 +295,7 @@ public class HelmetDbController {
                 userProfile.setPhoneNumber(rs.getString("contact_number"));
                 userProfile.setDob(rs.getDate("dob").toLocalDate());
                 userProfile.setAddress(rs.getString("address"));
-                userProfile.setImageUrlFromDB(rs.getString("user_image"));
+                userProfile.setImageUrlFromDB("imageUrl");
                 return userProfile;
             } else {
                 // User not found in the database

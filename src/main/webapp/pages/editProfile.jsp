@@ -6,23 +6,78 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Edit Profile</title>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/stylesheets/profile.css" />
+    <title>TopGuard Helmets || Edit Profile</title>
     <style>
-    * {
+    
+    
+ * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Roboto', sans-serif; 
+  font-family: 'Roboto', sans-serif;
+  
 }
 
-body {
-  min-height: 100vh;
+.body {
+	background: #3A4A4D;
+}
+
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 15px;
+  margin-top: 40px;
+  max-width: 430px;
   width: 100%;
-  background: #3A4A4D;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background: #fff;
+  border-radius: 7px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  padding: 1rem;
+}
+
+.container h1 {
+  font-size: 2rem;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.container p {
+  font-size: 17px;
+  margin-bottom: 1.3rem;
+}
+
+.container a {
+  font-size: 16px;
+  color: #3A4A4D;
+  margin: 5px;
+  text-decoration: none;
+}
+
+.container a:hover {
+  text-decoration: underline;
+}
+
+.container button {
+  height: 60px;
+  width: 100%;
+  padding: 0 15px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  margin-top: 1.2rem;
+  background-color: #3A4A4D;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.4s;
+}
+
+.container button:hover {
+  background-color: #7f9fa4;
 }
 
 .update_profile {
@@ -43,7 +98,7 @@ body {
 }
 
 .update_form_group {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.0rem;
 }
 
 .update_form_group label {
@@ -84,32 +139,31 @@ body {
 }
     
     </style>
-    
+     <jsp:include page="navBar.jsp"/>
 </head>
-<body>
-    <jsp:include page="navBar.jsp"/>
-
+<body class = body>
+   <section class = "o_form">
     <div class="container">
         <div class="box">
             <h1>Edit Profile</h1>
             <form action="${pageContext.request.contextPath}/UpdateProfileServlet" method="post">
-            <div class="form-group">
+            <div class="update_form_group">
                     <label for="userName">User Name:</label>
         			<input type="text" id="userName" name="userName" value="${userName}" readonly>
                 </div>
-                <div class="form-group">
+                <div class="update_form_group">
                     <label for="userFullName">Full Name:</label>
         			<input type="text" id="userFullName" name="userFullName" value="${userFullName}" required>
                 </div>
-                <div class="form-group">
+                <div class="update_form_group">
                     <label for="userEmail">Email:</label>
         			<input type="email" id="userEmail" name="userEmail" value="${userEmail}" required>
                 </div>
-                <div class="form-group">
+                <div class="update_form_group">
                     <label for="contactNumber">Phone Number:</label>
         			<input type="text" id="contactNumber" name="contactNumber" value="${contactNumber}" required>
                 </div>
-                <div class="form-group">
+                <div class="update_form_group">
                     <label for="address">Address:</label>
         			<input type="text" id="address" name="address" value="${address}" required>
                 </div>
@@ -117,7 +171,8 @@ body {
                     <button type="submit">Update</button>
                 </div>
             </form>
+            </div>
         </div>
-    </div>
+        </section>
 </body>
 </html>

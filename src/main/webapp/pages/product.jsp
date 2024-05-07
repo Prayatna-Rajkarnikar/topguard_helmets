@@ -8,10 +8,10 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/stylesheets/product.css" />
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
-
-</head>
-<body>
 <jsp:include page="navBar.jsp"/>
+</head>
+<body class = "body">
+
 	<div class="heading">
         <h1>Our Products</h1>
     </div>

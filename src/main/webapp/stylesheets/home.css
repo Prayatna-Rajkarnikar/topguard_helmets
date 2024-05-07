@@ -1,4 +1,4 @@
-@charset "ISO-8859-1";
+@charset "UTF-8";
 
 * {
     margin: 0;
@@ -8,9 +8,9 @@
 }
 
 .welcome h1 {
-    font-size: 15px; /* Adjust font size */
-    color: #3A4A4D; /* Text color */
-    margin-bottom: 10px; /* Add some bottom margin */
+    font-size: 15px;
+    color: #3A4A4D;
+    margin-bottom: 10px;
 }
 
 .home_slider {
@@ -66,21 +66,26 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin-top: 50px; /* Increase top margin */
+    margin-top: 50px;
 }
 
 .helmet-card {
-    flex: 1 0 calc(25% - 20px); /* Adjust card width for 4 cards per row */
-    margin: 10px; /* Add spacing between cards */
+    flex: 1 0 calc(50% - 20px); /* Adjust card width for 2 cards per row */
+    margin: 10px;
     padding: 20px;
     background-color: #F9FBFB;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
 .helmet-card img {
-    max-width: 100%;
-    height: auto;
+    max-width: 100%; /* Ensure image does not exceed card width */
+    height: auto; /* Allow image to maintain aspect ratio */
+    max-height: 200px; /* Limit image height to prevent it from being too big */
 }
 
 .helmet-card h2 {
@@ -89,14 +94,8 @@
     margin-top: 10px;
 }
 
-.helmet-card p {
+.helmet-card span {
     font-size: 16px;
-    color: #555;
-    margin-top: 5px;
-}
-
-.helmet-card p {
-    font-size: 16px;
-    color: #777; /* Adjust color for price */
+    color: #777;
     margin-top: 5px;
 }
