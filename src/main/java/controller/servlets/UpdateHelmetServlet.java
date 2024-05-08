@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import controller.database.HelmetDbController;
 import model.HelmetTableModel;
+import util.StringUtil;
 
 @WebServlet("/UpdateHelmetServlet")
 public class UpdateHelmetServlet extends HttpServlet {
@@ -23,12 +24,12 @@ public class UpdateHelmetServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Retrieve updated values from the form
-        String helmetId = request.getParameter("helmet_id");
-        String helmetName = request.getParameter("helmet_name");
-        String pricePara = request.getParameter("price");
-        String brand = request.getParameter("brand");
-        String color = request.getParameter("color");
-        String size = request.getParameter("size");
+        String helmetId = request.getParameter(StringUtil.helmetID);
+        String helmetName = request.getParameter(StringUtil.helmetName);
+        String pricePara = request.getParameter(StringUtil.helmetPrice);
+        String brand = request.getParameter(StringUtil.brand);
+        String color = request.getParameter(StringUtil.color);
+        String size = request.getParameter(StringUtil.size);
 
         // Parse price from string to double
         double price = 0.0;
@@ -39,14 +40,14 @@ public class UpdateHelmetServlet extends HttpServlet {
         } catch (NumberFormatException e) {
             // Handle the case where price is not a valid double
             e.printStackTrace(); // Log the exception
-            response.sendRedirect(request.getContextPath() + "/pages/adminProduct.jsp?error=true");
+            response.sendRedirect(request.getContextPath() + StringUtil.URL_ADMIN_PRODUCT);
             return; // Exit the method to avoid further processing
         }
 
         // Check if helmetId is null or empty
         if (helmetId == null || helmetId.isEmpty()) {
             // Handle the case where helmetId is null or empty
-            response.sendRedirect(request.getContextPath() + "/pages/adminProduct.jsp?error=true");
+            response.sendRedirect(request.getContextPath() + StringUtil.URL_ADMIN_PRODUCT);
             return; // Exit the method to avoid further processing
         }
 
@@ -56,9 +57,11 @@ public class UpdateHelmetServlet extends HttpServlet {
 
         // Redirect back to the original JSP page with success or error message
         if (result == 1) {
-            response.sendRedirect(request.getContextPath() + "/pages/adminProduct.jsp?success=true");
+			request.setAttribute("successMessage",StringUtil.UPDATE_HELMET_SUCCESS);
+            response.sendRedirect(request.getContextPath() + StringUtil.URL_ADMIN_PRODUCT);
         } else {
-            response.sendRedirect(request.getContextPath() + "/pages/adminProduct.jsp?error=true");
+			request.setAttribute("errorMessage",StringUtil.UPDATE_HELMET_ERROR);
+            response.sendRedirect(request.getContextPath() + StringUtil.URL_ADMIN_PRODUCT);
         }
     }
 }

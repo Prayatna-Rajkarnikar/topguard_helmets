@@ -1,3 +1,4 @@
+<%@page import="util.StringUtil"%>
 <%@page import="model.HelmetUserModel"%>
 <%@ page import="controller.database.HelmetDbController" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -149,23 +150,23 @@
             <form action="${pageContext.request.contextPath}/UpdateProfileServlet" method="post">
             <div class="update_form_group">
                     <label for="userName">User Name:</label>
-        			<input type="text" id="userName" name="userName" value="${userName}" readonly>
+        			<input type="text" id="userName" name="<%=StringUtil.userName%>" value="${userName}" readonly>
                 </div>
                 <div class="update_form_group">
                     <label for="userFullName">Full Name:</label>
-        			<input type="text" id="userFullName" name="userFullName" value="${userFullName}" required>
+        			<input type="text" id="userFullName" name="<%=StringUtil.userFullName%>" value="${userFullName}" required>
                 </div>
                 <div class="update_form_group">
                     <label for="userEmail">Email:</label>
-        			<input type="email" id="userEmail" name="userEmail" value="${userEmail}" required>
+        			<input type="email" id="userEmail" name="<%=StringUtil.email%>" value="${userEmail}" required>
                 </div>
                 <div class="update_form_group">
                     <label for="contactNumber">Phone Number:</label>
-        			<input type="text" id="contactNumber" name="contactNumber" value="${contactNumber}" required>
+        			<input type="text" id="contactNumber" name="<%=StringUtil.contactNumber%>" value="${contactNumber}" required>
                 </div>
                 <div class="update_form_group">
                     <label for="address">Address:</label>
-        			<input type="text" id="address" name="address" value="${address}" required>
+        			<input type="text" id="address" name="<%=StringUtil.address%>" value="${address}" required>
                 </div>
                 <div class="updateButton">
                     <button type="submit">Update</button>

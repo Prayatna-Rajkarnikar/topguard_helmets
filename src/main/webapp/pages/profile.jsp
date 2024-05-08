@@ -1,4 +1,3 @@
-<%@page import="model.UpdateUserModel"%>
 <%@ page import="controller.database.HelmetDbController" %>
 <%@ page import="model.LoginUserModel" %>
 <%@ page import="model.HelmetUserModel" %>
@@ -10,10 +9,10 @@
 <%
     // Check if the user is logged in
     // Assuming you have a session attribute named "loggedInUser" that stores the logged-in user's username
-    String loggedInUsername = (String) session.getAttribute(StringUtil.username);
+    String loggedInUsername = (String) session.getAttribute(StringUtil.userName);
     if (loggedInUsername == null || loggedInUsername.isEmpty()) {
         // Redirect to login page if not logged in
-        response.sendRedirect(request.getContextPath() + "/pages/login.jsp");
+        response.sendRedirect(request.getContextPath() + StringUtil.URL_LOGIN);
         return; // Stop further execution
     }
 
@@ -21,10 +20,10 @@
     HelmetDbController dbController = new HelmetDbController();
     
     // Retrieve user profile information from the database based on the logged-in username
-    HelmetUserModel userProfile = dbController.getUserProfile(loggedInUsername);
+    HelmetUserModel profile = dbController.obtainUserProfile(loggedInUsername);
 
     // Check if user profile is null
-    if (userProfile == null) {
+    if (profile == null) {
         // Handle case where user profile is not found
         // For example, display an error message
         out.println("User profile not found");
@@ -50,25 +49,25 @@
                 <%-- <img src="${pageContext.request.contextPath}/resources/user/${userProfile.getImageUrl}" alt="User Image"> --%>
             </div>
             <div class="user-details">
-                <p><strong>Username:</strong> <%= userProfile.getUserName() %></p>
-                <p><strong>Full Name:</strong> <%= userProfile.getFullName() %></p>
-                <p><strong>Email:</strong> <%= userProfile.getEmail() %></p>
-                <p><strong>Phone Number:</strong> <%= userProfile.getPhoneNumber() %></p>
-                <p><strong>DOB:</strong> <%= userProfile.getDob() %></p>
-                <p><strong>Address:</strong> <%= userProfile.getAddress() %></p>
+                <p><strong>Username:</strong> <%= profile.getUserName() %></p>
+                <p><strong>Full Name:</strong> <%= profile.getFullName() %></p>
+                <p><strong>Email:</strong> <%= profile.getEmail() %></p>
+                <p><strong>Phone Number:</strong> <%= profile.getPhoneNumber() %></p>
+                <p><strong>DOB:</strong> <%= profile.getDob() %></p>
+                <p><strong>Address:</strong> <%= profile.getAddress() %></p>
             </div>
             <form action="${pageContext.request.contextPath}/EditProfileServlet" method="post">
-                <input type="hidden" id="userName" name="userName" value="<%= userProfile.getUserName() %>">
-                <input type="hidden" id="userFullName" name="userFullName" value="<%= userProfile.getFullName() %>">
-                <input type="hidden" id="userEmail" name="userEmail" value="<%= userProfile.getEmail() %>">
-                <input type="hidden" id="contactNumber" name="contactNumber" value="<%= userProfile.getPhoneNumber() %>">
-                <input type="hidden" id="address" name="address" value="<%= userProfile.getAddress() %>">
+                <input type="hidden" id="userName" name="<%=StringUtil.userName%>" value="<%= profile.getUserName() %>">
+                <input type="hidden" id="userFullName" name="<%=StringUtil.userFullName%>" value="<%= profile.getFullName() %>">
+                <input type="hidden" id="userEmail" name="<%=StringUtil.email%>" value="<%= profile.getEmail() %>">
+                <input type="hidden" id="contactNumber" name="<%=StringUtil.contactNumber%>" value="<%= profile.getPhoneNumber() %>">
+                <input type="hidden" id="address" name="<%=StringUtil.address%>" value="<%= profile.getAddress() %>">
                 <div class="updateButton">
                     <button type="submit">Update</button>
                 </div>
             </form>
 
-            <a href="forgetPw.jsp" id="forgotPasswordLink">Reset Password</a>
+            <a href="${pageContext.request.contextPath}${StringUtil.URL_RESET_PW}" id="forgotPasswordLink">Reset Password</a>
         </div>
     </div>
 </body>

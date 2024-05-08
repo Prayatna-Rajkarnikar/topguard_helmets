@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import controller.database.HelmetDbController;
 import model.HelmetModel;
 import model.HelmetTableModel;
+import util.StringUtil;
 
 /**
  * Servlet implementation class DeleteProductServlet
@@ -33,11 +34,12 @@ public class ChangeProductServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String deleteIdString = request.getParameter("deleteId");
+        String deleteIdString = request.getParameter(StringUtil.DELETE_ID);
 
         if (deleteIdString != null && !deleteIdString.isEmpty()) {
             int deleteId = Integer.parseInt(deleteIdString);
             dbController.deleteHelmet(deleteId);
+            
             System.out.println("Deleted");
         } 
         
@@ -45,7 +47,8 @@ public class ChangeProductServlet extends HttpServlet {
         // Fetch all helmets from the database
         ArrayList<HelmetTableModel> helmets = dbController.getAllHelmets();
         request.setAttribute("helmets", helmets);
-        request.getRequestDispatcher("/pages/adminProduct.jsp").forward(request, response);
+		request.setAttribute("successMessage",StringUtil.DELETE_HELMET_SUCCESS);
+        request.getRequestDispatcher(StringUtil.URL_ADMIN_PRODUCT).forward(request, response);
     }
 }
 

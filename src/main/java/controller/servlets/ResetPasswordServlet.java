@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import controller.database.HelmetDbController;
+import util.StringUtil;
 
 /**
  * Servlet implementation class ResetPasswordServlet
@@ -24,39 +25,40 @@ public class ResetPasswordServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String username = request.getParameter("username");
-        System.out.println("Username: " + username);
-        String new_password = request.getParameter("new_password");
-        System.out.println("New Password: " + new_password);
+        String userName = request.getParameter(StringUtil.userName);
+        String new_password = request.getParameter(StringUtil.newPassword);
+        String confirmNewPassword = request.getParameter(StringUtil.confirmNewPassword);
+        
+        if (!new_password.equals(confirmNewPassword)) {
+            // New password and confirm new password do not match
+            // Set an error message and forward the request back to the reset password page
+        	request.setAttribute("errorMessage",StringUtil.NEWPWD_MISMATCHED_MESSAGE);
+			request.getRequestDispatcher(StringUtil.PAGE_URL_LOGIN).forward(request, response);
+			return;
+        }
 
         // Call the updateUserPasswordIfValid method from GadgetDbController
-        int result = dbController.updateUserPasswordIfValid(username, new_password); 
+        int result = dbController.updateUserPwdIfValid(userName, new_password); 
+        
         // Pass only the new password
-
-        System.out.println("Result: " + result);
         if (result == 1) {
             // Password updated successfully
-            System.out.println("Password updated successfully for user: " + username);
-            // Redirect to a success page or show a success message
-        } else if (result == -2) {
-            // Incorrect old password
-        	System.out.println("F Password");
-            // Redirect to a page showing an error message
+        	System.out.println("Password updated successfully for user: " + userName);
+        	request.setAttribute("successMessage",StringUtil.PWD_UPDATED_MESSAGE);
+			request.getRequestDispatcher(StringUtil.PAGE_URL_LOGIN).forward(request, response);
+			return;   
         } else if (result == -1) {
             // Username not found
-        	System.out.println("F Username");
-
-            // Redirect to a page showing an error message
+        	request.setAttribute("errorMessage",StringUtil.USERNAME_NOT_FOUND);
+			request.getRequestDispatcher(StringUtil.PAGE_URL_LOGIN).forward(request, response);
+			return;
         } else {
-            // Error updating password
-        	System.out.println("F Update");
-
-            // Redirect to a page showing an error message
+        	request.setAttribute("errorMessage",StringUtil.SERVER_ERROR);
+			request.getRequestDispatcher(StringUtil.PAGE_URL_LOGIN).forward(request, response);;
         }
     }
 

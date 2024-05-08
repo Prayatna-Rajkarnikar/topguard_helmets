@@ -19,21 +19,26 @@
    		<div style="color: red;"><%= error %></div>
 		<% } %>
 		
+		<% String success = (String) request.getAttribute(StringUtil.MESSAGE_SUCCESS); %>
+		<% if (success != null && !success.isEmpty()) { %>
+   		<div style="color: green;"><%= success %></div>
+		<% } %>
+		
         <form action="/TopGuard_Helmets/RegisterServlet" method="POST" enctype="multipart/form-data">
             <div class="form-row">
                 <div class="col">
-                    <label for="full_Name">Full Name:</label>
-                    <input type="text" id="full_Name" name="<%=StringUtil.fullName%>" required>
+                    <label for="userFullName">Full Name:</label>
+                    <input type="text" id="userFullName" name="<%=StringUtil.userFullName%>" required>
                 </div>
                 <div class="col">
-                    <label for="username">Username:</label>
-                    <input type="text" id="user_name" name="<%=StringUtil.username%>" required>
+                    <label for="userName">Username:</label>
+                    <input type="text" id="userName" name="<%=StringUtil.userName%>" required>
                 </div>
             </div>
             <div class="form-row">
                 <div class="col">
                     <label for="address">Address:</label>
-                    <input type="text" id="user_address" name="<%=StringUtil.address%>" required>
+                    <input type="text" id="address" name="<%=StringUtil.address%>" required>
                 </div>
                 <div class="col">
                     <label for="dob">Date of Birth:</label>
@@ -56,7 +61,7 @@
             <div class="form-row">
                 <div class="col">
                     <label for="phone">Phone Number:</label>
-                    <input type="tel" id="phone_Number" name="<%=StringUtil.phoneNumber%>" required>
+                    <input type="tel" id="contactNumber" name="<%=StringUtil.contactNumber%>" required>
                 </div>
                 <div class="col">
                     <label for="password">Password:</label>

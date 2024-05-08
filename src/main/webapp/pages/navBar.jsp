@@ -15,7 +15,7 @@
 <%
     // Get the session and request objects
     HttpSession userSession = request.getSession();
-    String currentUser = (String) userSession.getAttribute(StringUtil.username);
+    String currentUser = (String) userSession.getAttribute(StringUtil.userName);
     String contextPath = request.getContextPath();
     
 %>
@@ -23,14 +23,14 @@
     <nav>
         <div class="nav-content">
             <div class="logo">
-                <a href="${pageContext.request.contextPath}/pages/home.jsp"><b>TopGuard Helmets</b></a>
+                <a href="${pageContext.request.contextPath}${StringUtil.PAGE_URL_HOME}"><b>TopGuard Helmets</b></a>
             </div>
             <ul class="nav_items">
-                <li><a href="${pageContext.request.contextPath}/pages/home.jsp">Home</a></li>
-                <li><a href="${pageContext.request.contextPath}/pages/product.jsp">Helmets</a></li>
-                <li><a href="${pageContext.request.contextPath}/pages/profile.jsp">Profile</a></li>
-                <li><a href="${pageContext.request.contextPath}/pages/contactUs.jsp">Contact</a></li>
-                <li><a href="${pageContext.request.contextPath}/pages/aboutUs.jsp">About us</a></li>
+                <li><a href="${pageContext.request.contextPath}${StringUtil.PAGE_URL_HOME}">Home</a></li>
+                <li><a href="${pageContext.request.contextPath}${StringUtil.PAGE_URL_PRODUCTS}">Helmets</a></li>
+                <li><a href="${pageContext.request.contextPath}${StringUtil.URL_PROFILE}">Profile</a></li>
+                <li><a href="${pageContext.request.contextPath}${StringUtil.PAGE_URL_CONTACT}">Contact</a></li>
+                <li><a href="${pageContext.request.contextPath}${StringUtil.PAGE_URL_ABOUT_US}">About us</a></li>
                 <li>
                 <form action="<%
                     // Conditionally set the action URL based on user session

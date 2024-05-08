@@ -36,7 +36,7 @@ public class LogoutServlet extends HttpServlet {
             System.out.println("Terminated session");
             session.invalidate();
             
-            response.sendRedirect(request.getContextPath() + StringUtil.PAGE_URL_LOGIN);
+            response.sendRedirect(request.getContextPath() + StringUtil.URL_LANDINGPAGE);
         }
 		
 	}

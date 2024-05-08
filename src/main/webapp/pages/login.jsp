@@ -20,17 +20,22 @@ String contextPath = request.getContextPath();
 		<% if (error != null && !error.isEmpty()) { %>
    		<div style="color: red;"><%= error %></div>
 		<% } %>
+		
+		<% String success = (String) request.getAttribute(StringUtil.MESSAGE_SUCCESS); %>
+		<% if (success != null && !success.isEmpty()) { %>
+   		<div style="color: green;"><%= success %></div>
+		<% } %>
       <form action="/TopGuard_Helmets/LoginServlet" method="POST" >
       
-        <input type="text" placeholder="Enter username" id="usernameInput" name="<%=StringUtil.username%>">
-        <input type="password" placeholder="Enter your password" id="passwordInput" name="<%=StringUtil.password%>">
+        <input type="text" placeholder="Enter username" id="userName" name="<%=StringUtil.userName%>">
+        <input type="password" placeholder="Enter your password" id="password" name="<%=StringUtil.password%>">
         
-        <a href="forgetPw.jsp" id="forgotPasswordLink">Forgot password?</a>
+        <a href="${pageContext.request.contextPath}${StringUtil.URL_RESET_PW}" id="forgotPasswordLink">Forgot password?</a>
         <input type="submit" class="button" value="Login" id="loginButton">
       </form>
       <div class="signup" id="signupSection">
         <span class="signup">Don't have an account?
-            <a href="register.jsp?action=signup" class="signup-link">Signup</a>
+            <a href="${pageContext.request.contextPath}${StringUtil.PAGE_URL_REGISTER}" class="signup-link">Signup</a>
         </span>
     </div>
     

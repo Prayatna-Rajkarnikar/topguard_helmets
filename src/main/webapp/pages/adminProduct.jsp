@@ -15,19 +15,29 @@
     </a>
     <div class="helmet-container">
         <h1>Helmet Management</h1>
+        
+         <% String error = (String) request.getAttribute(StringUtil.MESSAGE_ERROR); %>
+		<% if (error != null && !error.isEmpty()) { %>
+   		<div style="color: red;"><%= error %></div>
+		<% } %>
+		
+		<% String success = (String) request.getAttribute(StringUtil.MESSAGE_SUCCESS); %>
+		<% if (success != null && !success.isEmpty()) { %>
+   		<div style="color: green;"><%= success %></div>
+		<% } %>
         <div class="helmet-form-container">
             <h2>Add a New Helmet</h2>
             <form action="${pageContext.request.contextPath}/AdminProductServlet" method="post" enctype="multipart/form-data">
                 <label for="helmet_name">Helmet Name:</label>
-                <input type="text" id="helmet_name" name="helmet_name" required>
+                <input type="text" id="helmet_name" name="<%=StringUtil.helmetName%>" required>
                 <label for="helmet_price">Helmet Price:</label>
-                <input type="number" id="helmet_price" name="helmet_price" required>
+                <input type="number" id="price" name="<%=StringUtil.helmetPrice%>" required>
                 <label for="helmet_brand">Helmet Brand:</label>
-                <input type="text" id="helmet_brand" name="helmet_brand" required>
+                <input type="text" id="brand" name="<%=StringUtil.brand%>" required>
                 <label for="helmet_color">Color:</label>
-                <input type="text" id="helmet_color" name="helmet_color" required>
+                <input type="text" id="color" name="<%=StringUtil.color%>" required>
                 <label for="helmet_size">Size:</label>
-                <input type="text" id="helmet_size" name="helmet_size" required>
+                <input type="text" id="size" name="<%=StringUtil.size%>" required>
                 <label for="helmet_image">Helmet Image:</label>
                 <input type="file" id="helmet_image" name="helmet_image" accept="image/png, image/jpeg, image/jpg" required>
                 <button type="submit" name="add_helmet">Add Helmet</button>
@@ -65,12 +75,12 @@
                             <td>${helmet.size}</td>
                             <td>
                             	   <form action="${pageContext.request.contextPath}/EditHelmetServlet" method="post">
-                                        <input type="hidden" id="helmet_id" name="helmet_id" value="${helmet.helmet_ID}">
-                                        <input type="hidden" id="helmet_name" name="helmet_name" value="${helmet.helmet_Name}">
-                                        <input type="hidden" id="price" name="price" value="${helmet.price}">
-                                        <input type="hidden" id="brand" name="brand" value="${helmet.brand}">
-                                        <input type="hidden" id="color" name="color" value="${helmet.color}">
-                                        <input type="hidden" id="size" name="size" value="${helmet.size}">
+                                        <input type="hidden" id="helmet_id" name="<%=StringUtil.helmetID%>" value="${helmet.helmet_ID}">
+                                        <input type="hidden" id="helmet_name" name="<%=StringUtil.helmetName%>" value="${helmet.helmet_Name}">
+                                        <input type="hidden" id="price" name="<%=StringUtil.helmetPrice%>" value="${helmet.price}">
+                                        <input type="hidden" id="brand" name="<%=StringUtil.brand%>" value="${helmet.brand}">
+                                        <input type="hidden" id="color" name="<%=StringUtil.color%>" value="${helmet.color}">
+                                        <input type="hidden" id="size" name="<%=StringUtil.size%>" value="${helmet.size}">
                                         <button type="submit" class="edit-btn">Edit</button>
                                     </form>
 

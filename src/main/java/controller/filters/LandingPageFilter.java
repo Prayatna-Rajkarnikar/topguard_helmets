@@ -23,16 +23,14 @@ public class LandingPageFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
 
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
-        HttpServletResponse httpResponse = (HttpServletResponse) response;
+        HttpServletRequest httpReq = (HttpServletRequest) request;
+        HttpServletResponse httpResp = (HttpServletResponse) response;
 
-        HttpSession session = httpRequest.getSession(false);
+        HttpSession session = httpReq.getSession(false);
 
         boolean isLoggedIn = session != null && session.getAttribute("loggedIn") != null && (boolean) session.getAttribute("loggedIn");
-        String username = session != null ? (String) session.getAttribute(StringUtil.username) : null;
-        //String userRole = session != null ? (String) session.getAttribute(StringUtil.role) : null;
+        String username = session != null ? (String) session.getAttribute(StringUtil.userName) : null;
 
-        System.out.println("Username: " + username); // Add logging
         //System.out.println("Role: " + userRole); // Add logging
 
         // Check if the user is logged in 
@@ -42,7 +40,7 @@ public class LandingPageFilter implements Filter {
         } else {
             // User is not authenticated, redirect to login page
             System.out.println("Access denied!"); // Add logging
-            httpResponse.sendRedirect(httpRequest.getContextPath() + "/pages/login.jsp");
+            httpResp.sendRedirect(httpReq.getContextPath() + "/pages/login.jsp");
         }
     }
 

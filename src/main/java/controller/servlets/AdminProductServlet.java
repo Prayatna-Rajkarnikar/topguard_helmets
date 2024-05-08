@@ -33,26 +33,46 @@ public class AdminProductServlet extends HttpServlet {
         // Fetch all helmets from the database
         ArrayList<HelmetTableModel> helmets = dbController.getAllHelmets();
         request.setAttribute("helmets", helmets);
-        request.getRequestDispatcher("/pages/adminProduct.jsp").forward(request, response);
+        request.getRequestDispatcher(StringUtil.URL_ADMIN_PRODUCT).forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String helmet_name = request.getParameter("helmet_name");
+        String helmet_name = request.getParameter(StringUtil.helmetName);
         double price = 0.0; // Default value in case of null
-        String priceParam = request.getParameter("helmet_price");
+        String priceParam = request.getParameter(StringUtil.helmetPrice);
         if (priceParam != null && !priceParam.trim().isEmpty()) {
             try {
                 price = Double.parseDouble(priceParam);
             } catch (NumberFormatException e) {
-                // Handle parsing error
-                e.printStackTrace();
+            	request.setAttribute("errorMessage", "Price must be a valid positive number.");
+                request.getRequestDispatcher(StringUtil.URL_ADMIN_PRODUCT).forward(request, response);
+                return;
             }
         }
-        String brand = request.getParameter("helmet_brand");
-        String color = request.getParameter("helmet_color");
-        String size = request.getParameter("helmet_size");
+        String brand = request.getParameter(StringUtil.brand);
+        String color = request.getParameter(StringUtil.color);
+        String size = request.getParameter(StringUtil.size);
         Part helmet_image = request.getPart("helmet_image");
         
+        
+        if (!brand.matches("^[a-zA-Z0-9]{6,}$")) {
+            request.setAttribute("errorMessage", StringUtil.SYMBOL_ERROR_MESSAGE);
+            request.getRequestDispatcher(StringUtil.URL_ADMIN_PRODUCT).forward(request, response);
+            return;
+        }
+
+        if (!color.matches("^[a-zA-Z0-9]{1,}$")) {
+            request.setAttribute("errorMessage", StringUtil.SYMBOL_ERROR_MESSAGE);
+            request.getRequestDispatcher(StringUtil.URL_ADMIN_PRODUCT).forward(request, response);
+            return;
+        }
+
+        if (!size.matches("^[a-zA-Z0-9]{1,}$")) {
+            request.setAttribute("errorMessage", StringUtil.SYMBOL_ERROR_MESSAGE);
+            request.getRequestDispatcher(StringUtil.URL_ADMIN_PRODUCT).forward(request, response);
+            return;
+        }
+	
         if (helmet_image != null) {
             HelmetModel helmetModel = new HelmetModel(helmet_name, price, brand, color, size, helmet_image);
 
@@ -67,9 +87,13 @@ public class AdminProductServlet extends HttpServlet {
                 // Fetch all helmets from the database
                 ArrayList<HelmetTableModel> helmets = dbController.getAllHelmets();
                 request.setAttribute("helmets", helmets);
-                request.getRequestDispatcher("/pages/adminProduct.jsp").forward(request, response);
+    			request.setAttribute("successMessage",StringUtil.ADD_HELMET_SUCCESS);
+                request.getRequestDispatcher(StringUtil.URL_ADMIN_PRODUCT).forward(request, response);
             } else {
                 // Error adding product, handle accordingly
+            	request.setAttribute("errorMessage",StringUtil.ADD_HELMET_ERROR);
+    			request.getRequestDispatcher(StringUtil.URL_ADMIN_PRODUCT).forward(request, response);
+    			return;
             }
         } else {
             // Handle the case when helmet_image is null

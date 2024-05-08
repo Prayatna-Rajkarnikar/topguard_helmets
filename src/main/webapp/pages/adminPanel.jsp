@@ -12,7 +12,7 @@
 	<%
     // Get the session and request objects
     HttpSession userSession = request.getSession();
-    String currentUser = (String) userSession.getAttribute(StringUtil.username);
+    String currentUser = (String) userSession.getAttribute(StringUtil.userName);
     String contextPath = request.getContextPath();
     
 	%>
@@ -21,17 +21,17 @@
         <nav>     
             <ul>
                 <li>
-                    <a href="${pageContext.request.contextPath}/pages/adminPanel.jsp">
+                    <a href="${pageContext.request.contextPath}${StringUtil.URL_ADMIN_PANEL}">
                         <h1><span class="navItem">Dashboard</span></h1>
                     </a>
                 </li>
                 <li>
-                    <a href="${pageContext.request.contextPath}/pages/.jsp">
+                    <a href="${pageContext.request.contextPath}${StringUtil.URL_PROFILE}">
                         <span class="navItem">Profile</span>
                     </a>
                 </li>
                 <li>
-                    <a href="${pageContext.request.contextPath}/pages/adminProduct.jsp">
+                    <a href="${pageContext.request.contextPath}${StringUtil.URL_ADMIN_PRODUCT}">
                         <span class="navItem">Products</span>
                     </a>
                 </li>
